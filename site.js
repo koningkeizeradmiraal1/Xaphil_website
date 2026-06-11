@@ -102,4 +102,9 @@
       document.body.classList.toggle('menu-open');
     });
   }
+
+  // verberg ontbrekende partnerlogo's netjes (geen kapot-icoon)
+  document.querySelectorAll('.clients .logo-img').forEach(function (img) {
+    img.addEventListener('error', function () { img.style.display = 'none'; });
+  });
 })();
