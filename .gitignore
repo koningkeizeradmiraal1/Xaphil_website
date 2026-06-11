@@ -1,0 +1,13 @@
+# Helper-scripts (alleen gebruikt om pagina's te genereren)
+_gen.py
+_build.py
+
+# Oude losse conceptversie
+xaphil-redesign.html
+
+# OS / editor rommel
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
