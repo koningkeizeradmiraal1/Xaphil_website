@@ -126,7 +126,7 @@ nav.main > a:hover::after, .has-drop:hover > a::after, nav.main > a.active::afte
 .clients .wrap{padding:26px 24px;display:flex;align-items:center;gap:34px;flex-wrap:wrap;justify-content:center}
 .clients span.lbl{font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .clients .pill{font-weight:700;color:#8a98a8;font-size:1.02rem;opacity:.85}
-.clients .logo-img{height:46px;width:auto;max-width:140px;object-fit:contain;background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 20px;box-shadow:0 10px 24px -14px rgba(28,37,50,.6);transition:.25s}
+.clients .logo-img{height:72px;width:auto;max-width:210px;object-fit:contain;background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 28px;box-shadow:0 10px 24px -14px rgba(28,37,50,.6);transition:.25s}
 .clients .logo-img:hover{transform:translateY(-3px);box-shadow:0 16px 30px -14px rgba(28,37,50,.6)}
 
 /* Section base */
