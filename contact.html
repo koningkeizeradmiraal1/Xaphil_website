@@ -31,18 +31,22 @@
         <div class="item"><div class="ci">📍</div><div><b>Adres</b><span>Verlengde Bremenweg 15<br>9723 JV Groningen</span></div></div>
         <div class="item"><div class="ci">⏰</div><div><b>Spoeddienst</b><span>24 uur per dag, 7 dagen per week bereikbaar</span></div></div>
       </div>
-      <form class="form" onsubmit="event.preventDefault();this.querySelector('.done').style.display='block';">
+      <form class="form" action="https://formsubmit.co/info@xaphilfacilityservices.com" method="POST">
+        <input type="hidden" name="_subject" value="Nieuwe aanvraag via xaphilfacilityservices.com">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <div class="row">
-          <div class="field"><label for="naam">Naam</label><input id="naam" type="text" placeholder="Uw naam" required></div>
-          <div class="field"><label for="bedrijf">Bedrijf (optioneel)</label><input id="bedrijf" type="text" placeholder="Bedrijfsnaam"></div>
+          <div class="field"><label for="naam">Naam</label><input id="naam" name="Naam" type="text" placeholder="Uw naam" required></div>
+          <div class="field"><label for="bedrijf">Bedrijf (optioneel)</label><input id="bedrijf" name="Bedrijf" type="text" placeholder="Bedrijfsnaam"></div>
         </div>
         <div class="row">
-          <div class="field"><label for="email">E-mailadres</label><input id="email" type="email" placeholder="naam@voorbeeld.nl" required></div>
-          <div class="field"><label for="tel">Telefoonnummer</label><input id="tel" type="tel" placeholder="06 ..."></div>
+          <div class="field"><label for="email">E-mailadres</label><input id="email" name="E-mailadres" type="email" placeholder="naam@voorbeeld.nl" required></div>
+          <div class="field"><label for="tel">Telefoonnummer</label><input id="tel" name="Telefoon" type="tel" placeholder="06 ..."></div>
         </div>
         <div class="field">
           <label for="dienst">Gewenste dienst</label>
-          <select id="dienst">
+          <select id="dienst" name="Dienst">
             <option>Reguliere schoonmaak</option>
             <option>Glasbewassing</option>
             <option>Opleveringsschoonmaak</option>
@@ -56,10 +60,9 @@
             <option>Anders / weet ik nog niet</option>
           </select>
         </div>
-        <div class="field"><label for="bericht">Uw bericht</label><textarea id="bericht" placeholder="Beschrijf kort uw situatie of vraag..."></textarea></div>
+        <div class="field"><label for="bericht">Uw bericht</label><textarea id="bericht" name="Bericht" placeholder="Beschrijf kort uw situatie of vraag..." required></textarea></div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Verstuur aanvraag</button>
-        <p class="done" style="display:none;color:var(--teal-dark);font-weight:700;margin-top:14px">✓ Bedankt! Dit is een demoformulier — in de live site komt uw aanvraag bij ons binnen.</p>
-        <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Dit formulier is onderdeel van het concept-redesign en verstuurt nog geen echte e-mail.</p>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Uw aanvraag komt rechtstreeks bij ons binnen op info@xaphilfacilityservices.com. We reageren zo snel mogelijk.</p>
       </form>
     </div>
   </div>
