@@ -2,21 +2,15 @@
 (function () {
   var page = document.body.getAttribute('data-page') || '';
 
+  // Officieel logo. Lokaal bestand 'images/logo.png' heeft voorrang; valt anders
+  // terug op het logo dat al op de eigen server staat.
+  var LOGO_LOCAL = 'images/logo.png';
+  var LOGO_REMOTE = 'https://xaphilfacilityservices.websitebijnaklaar.nl/wp-content/uploads/2024/11/logo.png';
   var logoSVG =
-    '<span class="mark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Xaphil logo">' +
-    '<defs><linearGradient id="lg_' + Math.random().toString(36).slice(2, 7) + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#caa033"/><stop offset="1" stop-color="#ecd884"/></linearGradient></defs>' +
-    '<path d="M22 44 L50 18 L78 44 L78 86 L22 86 Z" fill="url(#lgGoldShared)"/>' +
-    '<path d="M30 40 Q48 30 64 46" stroke="#1ba4dd" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-    '<path d="M30 40 L30 70 Q47 80 64 70 L64 46" stroke="#1ba4dd" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
-    '<rect x="58" y="60" width="9" height="20" rx="2" transform="rotate(32 62 70)" fill="#1ba4dd"/>' +
-    '<path d="M40 44 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z" fill="#ecd884"/>' +
-    '<path d="M52 58 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z" fill="#ecd884"/>' +
-    '</svg></span><span class="word">X<b>aphil</b><small>Facility Services</small></span>';
+    '<img class="logo-full" src="' + LOGO_LOCAL + '" alt="Xaphil Facility Services" ' +
+    'onerror="this.onerror=null;this.src=\'' + LOGO_REMOTE + '\'">';
 
-  // global gradient def so all logo instances share one id
-  var defSvg = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' +
-    '<linearGradient id="lgGoldShared" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#caa033"/><stop offset="1" stop-color="#ecd884"/></linearGradient>' +
-    '</defs></svg>';
+  var defSvg = '';
 
   var diensten = [
     ['glasbewassing.html', 'Glasbewassing'],

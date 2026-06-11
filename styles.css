@@ -51,12 +51,14 @@ h1,h2,h3{line-height:1.14;letter-spacing:-.02em;font-weight:800}
 header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px}
 .logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:1.22rem;color:var(--teal)}
+.logo .logo-full{height:50px;width:auto;display:block}
 .logo .mark{width:46px;height:46px;display:grid;place-items:center;flex:none}
 .logo .mark svg{width:100%;height:100%}
 .logo .word b{color:var(--gold)}
 .logo small{display:block;font-size:.62rem;font-weight:700;letter-spacing:.14em;color:var(--teal);text-transform:uppercase}
 footer .logo, footer .logo small{color:#fff}
 footer .logo .word b{color:var(--gold-light)}
+footer .logo .logo-full{height:56px;background:#fff;border-radius:10px;padding:8px 12px}
 nav.main{display:flex;gap:28px;align-items:center}
 nav.main > a, .has-drop > a{font-weight:600;font-size:.94rem;color:var(--navy);position:relative;padding:26px 0;display:inline-flex;align-items:center;gap:5px}
 nav.main > a::after, .has-drop > a::after{content:"";position:absolute;left:0;bottom:18px;width:0;height:2px;background:var(--teal);transition:.25s}
@@ -95,6 +97,7 @@ nav.main > a:hover::after, .has-drop:hover > a::after, nav.main > a.active::afte
 .hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:8px}
 .hero-photo{border-radius:18px;height:420px;background:linear-gradient(160deg,#2f4a5e,#1c2532);position:relative;display:flex;align-items:flex-end;padding:22px;overflow:hidden}
 .hero-photo .scene{position:absolute;inset:0;width:100%;height:100%}
+.hero-photo img.scene{object-fit:cover}
 .hero-badge{position:absolute;top:18px;left:18px;background:#fff;color:var(--navy);font-weight:700;font-size:.8rem;padding:9px 14px;border-radius:999px;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow)}
 .hero-badge .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.2)}
 .hero-rev{background:rgba(255,255,255,.95);color:var(--navy);border-radius:14px;padding:14px 16px;width:100%;display:flex;align-items:center;gap:12px}
@@ -104,8 +107,13 @@ nav.main > a:hover::after, .has-drop:hover > a::after, nav.main > a.active::afte
 
 /* Page banner (inner pages) */
 .banner{position:relative;background:radial-gradient(900px 500px at 85% -20%,#33465c 0,var(--navy) 60%);color:#fff;overflow:hidden}
-.banner::after{content:"";position:absolute;right:-100px;top:-120px;width:440px;height:440px;background:radial-gradient(circle,rgba(212,167,47,.22),transparent 65%)}
+.banner::after{content:"";position:absolute;right:-100px;top:-120px;width:440px;height:440px;background:radial-gradient(circle,rgba(212,167,47,.22),transparent 65%);z-index:1}
+.banner .bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.banner .bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+.banner .bg .ov{position:absolute;inset:0;background:linear-gradient(100deg,rgba(18,26,36,.94) 30%,rgba(18,26,36,.62) 70%,rgba(18,26,36,.45))}
+.banner.has-img{background:var(--navy)}
 .banner .wrap{position:relative;z-index:2;padding:64px 24px 70px}
+.banner.has-img .wrap{padding:84px 24px 90px}
 .banner h1{font-size:clamp(2rem,4.2vw,3rem);margin:14px 0 14px;max-width:760px}
 .banner p{color:#cdd6e2;max-width:620px;font-size:1.08rem}
 .crumb{display:flex;gap:8px;align-items:center;font-size:.84rem;color:#9fb0c2;margin-bottom:6px;flex-wrap:wrap}
@@ -118,6 +126,8 @@ nav.main > a:hover::after, .has-drop:hover > a::after, nav.main > a.active::afte
 .clients .wrap{padding:26px 24px;display:flex;align-items:center;gap:34px;flex-wrap:wrap;justify-content:center}
 .clients span.lbl{font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .clients .pill{font-weight:700;color:#8a98a8;font-size:1.02rem;opacity:.85}
+.clients .logo-img{height:44px;width:auto;max-width:130px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 18px;box-shadow:0 8px 20px -14px rgba(28,37,50,.5);transition:.25s}
+.clients .logo-img:hover{transform:translateY(-3px);box-shadow:0 14px 26px -14px rgba(28,37,50,.5)}
 
 /* Section base */
 section{padding:86px 0}
@@ -236,10 +246,22 @@ section.tight{padding:60px 0}
 .proj:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
 .proj .top{height:170px;position:relative;display:grid;place-items:center;color:#fff}
 .proj .top svg{width:100%;height:100%;position:absolute;inset:0}
-.proj .tag{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.9);color:var(--navy);font-size:.72rem;font-weight:700;padding:5px 11px;border-radius:999px;z-index:2}
+.proj .top img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}
+.proj .tag{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);color:var(--navy);font-size:.72rem;font-weight:700;padding:5px 11px;border-radius:999px;z-index:2}
 .proj .body{padding:22px}
 .proj .body h3{font-size:1.12rem}
 .proj .body p{color:var(--muted);font-size:.93rem;margin-top:8px}
+
+/* Before / after */
+.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:5px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#fff;transition:.25s}
+.ba-pair:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.ba-pair figure{position:relative;margin:0;overflow:hidden}
+.ba-pair img{width:100%;height:240px;object-fit:cover;display:block;transition:.4s}
+.ba-pair figure:hover img{transform:scale(1.05)}
+.ba-pair figcaption{position:absolute;top:10px;left:10px;color:#fff;font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:999px;letter-spacing:.06em}
+.ba-pair .voor figcaption{background:rgba(28,37,50,.82)}
+.ba-pair .na figcaption{background:var(--teal)}
+@media(max-width:640px){.ba-pair img{height:180px}}
 
 /* Contact form */
 .form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
