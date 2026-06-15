@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stijlvoorbeeld — Xaphil Facility Services</title>
+<style>
+  :root{
+    --navy:#1c2532;--navy-2:#1f3a4d;--blue:#1ba4dd;--blue-dark:#1488bb;
+    --gold:#d4a72f;--gold-light:#ecd884;--mint:#e3f4fc;--ink:#1c2532;--muted:#5b6776;
+    --line:#e6eaef;--bg:#fff;--bg-soft:#f5f8fa;--radius:18px;--shadow:0 18px 50px -22px rgba(28,37,50,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{line-height:1.14;letter-spacing:-.02em;font-weight:800}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-dark)}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--blue);border-radius:2px}
+
+  .note{background:var(--navy);color:#cdd6e2;font-size:.9rem;text-align:center;padding:12px}
+  .note b{color:var(--gold-light)}
+
+  /* Refined hero strip */
+  .hero{position:relative;overflow:hidden;background:radial-gradient(900px 500px at 80% -20%,#33465c,var(--navy) 60%);color:#fff}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:center;padding:70px 24px}
+  .hero h1{font-size:clamp(2rem,4vw,3rem);margin:16px 0}
+  .hero h1 .accent{background:linear-gradient(90deg,var(--gold),var(--gold-light));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:#cdd6e2;max-width:480px;margin-bottom:26px}
+  .pills{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:9px 15px;border-radius:999px;font-size:.86rem;font-weight:600}
+  .pill svg{width:18px;height:18px;color:var(--gold-light)}
+  .hero-media{position:relative;border-radius:22px;overflow:hidden;height:340px;box-shadow:var(--shadow)}
+  .hero-media img{width:100%;height:100%;object-fit:cover}
+  .hero-media .glow{position:absolute;inset:0;background:linear-gradient(160deg,transparent,rgba(28,37,50,.25))}
+  .hero-media .chip{position:absolute;left:18px;bottom:18px;background:rgba(255,255,255,.95);color:var(--navy);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-weight:700}
+  .hero-media .chip svg{width:22px;height:22px;color:var(--blue)}
+  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero-media{height:240px}}
+
+  section{padding:70px 0}
+  .sec-head{max-width:680px;margin-bottom:42px}
+  .sec-head h2{font-size:clamp(1.8rem,3.2vw,2.5rem);margin-top:12px}
+  .sec-head p{color:var(--muted);margin-top:14px;font-size:1.05rem}
+
+  .grid{display:grid;gap:22px;grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+
+  /* Upgraded cards */
+  .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;transition:.28s;overflow:hidden}
+  .card::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transform:scaleX(0);transform-origin:left;transition:.3s}
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent}
+  .card:hover::after{transform:scaleX(1)}
+  .badge{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;margin-bottom:20px;background:linear-gradient(145deg,var(--gold),var(--gold-light));box-shadow:0 10px 22px -10px rgba(212,167,47,.7)}
+  .badge svg{width:30px;height:30px;color:var(--navy);stroke-width:1.7}
+  .card.blue .badge{background:linear-gradient(145deg,var(--blue),#5fc4ee);box-shadow:0 10px 22px -10px rgba(27,164,221,.7)}
+  .card.blue .badge svg{color:#fff}
+  .card.blue::after{background:linear-gradient(90deg,var(--blue),#7fd4f2)}
+  .card h3{font-size:1.2rem}
+  .card p{color:var(--muted);margin:10px 0 16px;font-size:.96rem}
+  .card a{font-weight:700;color:var(--blue-dark);font-size:.9rem;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  .card a svg{width:16px;height:16px;transition:.2s}
+  .card a:hover svg{transform:translateX(4px)}
+
+  /* Why row with icons */
+  .why{background:var(--bg-soft)}
+  .why .grid{grid-template-columns:repeat(3,1fr)}
+  .feat{display:flex;gap:16px;align-items:flex-start}
+  .feat .ic{width:50px;height:50px;border-radius:14px;flex:none;display:grid;place-items:center;background:var(--mint);color:var(--blue-dark)}
+  .feat .ic svg{width:26px;height:26px;stroke-width:1.7}
+  .feat h3{font-size:1.1rem}
+  .feat p{color:var(--muted);font-size:.94rem;margin-top:5px}
+  @media(max-width:760px){.why .grid{grid-template-columns:1fr}}
+
+  /* Stats with icons */
+  .stats{background:var(--navy);border-radius:24px;padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;color:#fff;text-align:center}
+  .stats .s svg{width:30px;height:30px;color:var(--gold-light);margin-bottom:8px}
+  .stats .s b{display:block;font-size:2.4rem;font-weight:800;color:var(--gold-light);letter-spacing:-.03em}
+  .stats .s span{color:#aab8c8;font-size:.95rem}
+  @media(max-width:600px){.stats{grid-template-columns:1fr;gap:24px}}
+</style>
+</head>
+<body>
+
+<div class="note">Dit is een <b>stijlvoorbeeld</b> — nieuwe lijniconen in badges, meer beeld en verfijnde kaarten. Nog niet live; ter goedkeuring van de richting.</div>
+
+<!-- Hero -->
+<section class="hero" style="padding:0">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--gold-light)">Schoonmaakbedrijf Groningen</span>
+      <h1>Schoonmaken met zorg,<br><span class="accent">gedreven door kwaliteit.</span></h1>
+      <p>Specialistische en professionele schoonmaak — verfijnder gepresenteerd, met heldere iconen en sprekend beeld.</p>
+      <div class="pills">
+        <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> 350+ projecten</span>
+        <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8L3.5 9.2l5.9-.9z"/></svg> 5.0 op Google</span>
+        <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 24/7 spoed</span>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="images/kantoorschoonmaak%20groningen.png" alt="Xaphil kantoorschoonmaak">
+      <div class="glow"></div>
+      <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg> Vandaag beschikbaar</div>
+    </div>
+  </div>
+</section>
+
+<!-- Diensten upgraded -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Wat we doen</span>
+      <h2>Meer dan reguliere schoonmaak</h2>
+      <p>Voorbeeld van de nieuwe kaartstijl: lijnicoon in een goud/blauw badge, gouden accentlijn bij hover.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h5v4H9zM11 7v3M7 10h7l1 9H6z"/><path d="M9 14h3"/></svg></div>
+        <h3>Reguliere schoonmaak</h3>
+        <p>Kantoorpanden, publieke ruimtes en oplevering. Betrouwbaar en consistent.</p>
+        <a href="#">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="card blue">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></div>
+        <h3>Extreme schoonmaak</h3>
+        <p>Reiniging na overlijden of incidenten. Met respect, discretie en protocol.</p>
+        <a href="#">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 12h18M12 3v18"/><path d="M16 7l3-1-1 3" /></svg></div>
+        <h3>Glas &amp; ramen wassen</h3>
+        <p>Streepvrij gereinigd glas van elk gebouw, ongeacht de hoogte.</p>
+        <a href="#">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M12 16c-2-2-3-3-3-4.2A1.6 1.6 0 0112 11a1.6 1.6 0 013 0.8C15 13 14 14 12 16z"/></svg></div>
+        <h3>Hulp bij verzamelwoede</h3>
+        <p>Leefruimte herstellen met een persoonlijke, respectvolle aanpak.</p>
+        <a href="#">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></div>
+        <h3>Gevelreiniging</h3>
+        <p>Vakkundige reiniging van gevels voor een frisse, verzorgde uitstraling.</p>
+        <a href="#">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><path d="M10 11l8 8M16 17l2-2 2 2"/></svg></div>
+        <h3>Opleveringsschoonmaak</h3>
+        <p>Grondige eindreiniging bij verhuizing of oplevering — sleutelklaar.</p>
+        <a href="#">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why with icons -->
+<section class="why">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Waarom Xaphil</span><h2>De zekerheid van een specialist</h2></div>
+    <div class="grid">
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></div><div><h3>Deskundigheid</h3><p>Opgeleid voor zelfs de meest gevoelige situaties — discreet en met zorg.</p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13a3 3 0 100-6 3 3 0 000 6zM2 20a6 6 0 0112 0"/><path d="M16 8l2 2 4-4"/></svg></div><div><h3>Persoonlijk &amp; flexibel</h3><p>We luisteren en passen onze aanpak aan op uw situatie.</p></div></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-6 8-11a8 8 0 10-16 0c0 5 3 8 8 11z"/><path d="M9 11c1.5 0 3 1 3 3 0-2 1.5-3 3-3"/></svg></div><div><h3>Milieubewust</h3><p>Duurzame, veilige middelen — veilig voor mens én milieu.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="stats">
+      <div class="s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg><b>350+</b><span>Afgeronde projecten</span></div>
+      <div class="s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-3 8-6 8-11a8 8 0 10-16 0c0 5 3 8 8 11z"/></svg><b>100%</b><span>Beveelt ons aan</span></div>
+      <div class="s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 106 0 3 3 0 00-6 0zM4 21a8 8 0 0116 0"/></svg><b>16+</b><span>Man personeel</span></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

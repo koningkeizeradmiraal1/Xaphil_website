@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobiel stijlvoorbeeld — Xaphil</title>
+<style>
+  :root{
+    --navy:#1c2532;--navy-2:#1f3a4d;--blue:#1ba4dd;--blue-dark:#1488bb;
+    --gold:#d4a72f;--gold-light:#ecd884;--mint:#e8f6fd;--ink:#1c2532;--muted:#62707e;--line:#eceff3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 30% 0%,#eaf3f9,#dbe6ee);min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:18px;padding:32px 16px}
+  .caption{max-width:420px;text-align:center;color:#46586a;font-size:.92rem}
+  .caption b{color:var(--navy)}
+
+  /* phone frame */
+  .phone{width:390px;max-width:100%;background:#0e151d;border-radius:46px;padding:12px;box-shadow:0 40px 80px -30px rgba(20,30,45,.55)}
+  .screen{background:#fff;border-radius:36px;overflow:hidden;position:relative;height:780px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .screen::-webkit-scrollbar{display:none}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:26px;background:#0e151d;border-radius:0 0 16px 16px;z-index:30}
+
+  /* top bar */
+  .top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--blue);font-size:1.05rem}
+  .brand .mk{width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,var(--gold),var(--gold-light));display:grid;place-items:center}
+  .brand .mk svg{width:19px;height:19px;color:var(--navy)}
+  .brand b{color:var(--gold)}
+  .top .ic{width:42px;height:42px;border-radius:13px;border:1px solid var(--line);display:grid;place-items:center;color:var(--navy)}
+  .top .ic svg{width:22px;height:22px}
+
+  .hero{background:radial-gradient(420px 320px at 80% -10%,#33465c,var(--navy));color:#fff;padding:26px 20px 30px;border-radius:0 0 28px 28px}
+  .hi{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);padding:7px 13px;border-radius:999px;font-size:.78rem;font-weight:600;color:var(--gold-light)}
+  .hero h1{font-size:1.7rem;line-height:1.15;letter-spacing:-.02em;margin:14px 0 8px}
+  .hero h1 .g{color:var(--gold-light)}
+  .hero p{color:#cdd6e2;font-size:.96rem;margin-bottom:18px}
+  .hero-photo{border-radius:20px;overflow:hidden;height:170px;position:relative;margin-bottom:18px}
+  .hero-photo img{width:100%;height:100%;object-fit:cover}
+  .hero-photo .chip{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.95);color:var(--navy);border-radius:12px;padding:8px 12px;font-size:.8rem;font-weight:700;display:flex;align-items:center;gap:7px}
+  .hero-photo .chip svg{width:17px;height:17px;color:var(--blue)}
+  .btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:16px;border-radius:16px;font-weight:700;font-size:1rem;text-decoration:none;margin-bottom:10px}
+  .btn svg{width:20px;height:20px}
+  .btn-gold{background:linear-gradient(145deg,var(--gold),var(--gold-light));color:#3a2c06}
+  .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+
+  .sec{padding:26px 20px 16px}
+  .ey{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-dark)}
+  .sec h2{font-size:1.4rem;letter-spacing:-.02em;margin:8px 0 4px}
+  .sec .sub{color:var(--muted);font-size:.92rem;margin-bottom:18px}
+
+  .scards{display:flex;flex-direction:column;gap:14px}
+  .sc{display:flex;gap:15px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;transition:.2s}
+  .sc:active{transform:scale(.98)}
+  .sc .bd{width:54px;height:54px;flex:none;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,var(--gold),var(--gold-light))}
+  .sc.b .bd{background:linear-gradient(145deg,var(--blue),#5fc4ee)}
+  .sc .bd svg{width:28px;height:28px;color:var(--navy);stroke-width:1.7}
+  .sc.b .bd svg{color:#fff}
+  .sc h3{font-size:1.02rem}
+  .sc p{color:var(--muted);font-size:.85rem;margin-top:2px}
+  .sc .go{margin-left:auto;color:var(--blue);flex:none}
+  .sc .go svg{width:22px;height:22px}
+
+  .review{margin:6px 20px 20px;background:var(--mint);border-radius:20px;padding:18px}
+  .review .st{color:#f6b21b;letter-spacing:2px;font-size:1rem}
+  .review p{font-size:.9rem;color:#33414f;margin:8px 0 10px}
+  .review .who{display:flex;align-items:center;gap:10px}
+  .review .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(145deg,var(--blue),var(--navy-2));color:#fff;display:grid;place-items:center;font-weight:700;font-size:.8rem}
+  .review .who b{font-size:.85rem}
+  .review .who span{font-size:.72rem;color:var(--muted);display:block}
+
+  .spacer{height:84px}
+  /* friendly bottom action bar */
+  .bar{position:sticky;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;padding:12px 14px 16px}
+  .bar a{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--navy);padding:8px 4px;border-radius:14px}
+  .bar a svg{width:23px;height:23px}
+  .bar .call{background:var(--mint);color:var(--blue-dark)}
+  .bar .wa{background:#e7f9ee;color:#1c9d52}
+  .bar .offer{background:linear-gradient(145deg,var(--gold),var(--gold-light));color:#3a2c06;flex-direction:row;gap:7px;font-size:.86rem}
+</style>
+</head>
+<body>
+<div class="caption">Mobiel voorbeeld — <b>vriendelijker en ruimer</b>: grote tikvlakken, zachte afronding, en onderaan een handige balk om direct te bellen, te WhatsAppen of een offerte te vragen.</div>
+
+<div class="phone">
+  <div class="screen">
+    <div class="notch"></div>
+
+    <div class="top">
+      <div class="brand"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l3-9 7-7 4 4-7 7z"/><path d="M14 7l3 3"/></svg></span>X<b>aphil</b></div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></div>
+    </div>
+
+    <div class="hero">
+      <span class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Schoonmaakbedrijf Groningen</span>
+      <h1>Schoon, snel en <span class="g">met zorg.</span></h1>
+      <p>Hoi! Waar kunnen we mee helpen? Vraag vrijblijvend een offerte aan.</p>
+      <div class="hero-photo">
+        <img src="images/glasbewassing-hoofd.png" alt="Xaphil aan het werk">
+        <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg> Vandaag beschikbaar</div>
+      </div>
+      <a class="btn btn-gold" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3z"/></svg> Vraag een offerte aan</a>
+      <a class="btn btn-ghost" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a2 2 0 012 1.6l.6 3a2 2 0 01-.6 1.9L6.7 12a14 14 0 005.3 5.3l1.5-1.3a2 2 0 011.9-.6l3 .6A2 2 0 0121 18v2a2 2 0 01-2 2A16 16 0 014 7a2 2 0 012-2z"/></svg> Bel ons direct</a>
+    </div>
+
+    <div class="sec">
+      <span class="ey">Wat we doen</span>
+      <h2>Onze diensten</h2>
+      <div class="sub">Tik om meer te lezen — overal grote, prettige knoppen.</div>
+      <div class="scards">
+        <div class="sc">
+          <div class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 12h18M12 3v18"/><path d="M16 7l3-1-1 3"/></svg></div>
+          <div><h3>Glas &amp; ramen wassen</h3><p>Streepvrij, op elke hoogte.</p></div>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+        <div class="sc b">
+          <div class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></div>
+          <div><h3>Extreme schoonmaak</h3><p>Discreet en volgens protocol.</p></div>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+        <div class="sc">
+          <div class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M12 16c-2-2-3-3-3-4.2A1.6 1.6 0 0112 11a1.6 1.6 0 013 .8C15 13 14 14 12 16z"/></svg></div>
+          <div><h3>Hulp bij verzamelwoede</h3><p>Persoonlijk en respectvol.</p></div>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="review">
+      <div class="st">★★★★★</div>
+      <p>"Professioneel, betrouwbaar en grondig. Onze ruimte is nog nooit zo schoon geweest!"</p>
+      <div class="who"><span class="av">CB</span><div><b>Claudia Boerema</b><span>Google review · 5.0</span></div></div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="bar">
+      <a class="call" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3a2 2 0 012 1.6l.6 3a2 2 0 01-.6 1.9L6.7 12a14 14 0 005.3 5.3l1.5-1.3a2 2 0 011.9-.6l3 .6A2 2 0 0121 18v2a2 2 0 01-2 2A16 16 0 014 7a2 2 0 012-2z"/></svg>Bellen</a>
+      <a class="wa" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.7-5A8 8 0 1112 20a8 8 0 01-4-1z"/></svg>WhatsApp</a>
+      <a class="offer" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3z"/></svg>Offerte</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
