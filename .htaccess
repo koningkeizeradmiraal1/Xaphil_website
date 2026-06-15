@@ -1,0 +1,33 @@
+# Xaphil Facility Services — 301 redirects
+# Stuurt de tijdelijke platte .html-adressen door naar de juiste map-URL's
+# (zelfde structuur als de oude WordPress-site, behoud van SEO).
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # index.html -> /
+  RewriteRule ^index\.html$ / [R=301,L]
+
+  # Diensten
+  RewriteRule ^diensten\.html$ /diensten/ [R=301,L]
+  RewriteRule ^glasbewassing\.html$ /diensten/glasbewassing/ [R=301,L]
+  RewriteRule ^opleveringsschoonmaak\.html$ /diensten/opleveringsschoonmaak/ [R=301,L]
+  RewriteRule ^verzamelwoede\.html$ /diensten/hoarding-verzamelwoede-schoonmaak/ [R=301,L]
+  RewriteRule ^nachtclub-event\.html$ /diensten/nachtclub-en-eventreiniging/ [R=301,L]
+  RewriteRule ^extreme-schoonmaak\.html$ /diensten/extreme-schoonmaak-na-incidenten/ [R=301,L]
+  RewriteRule ^publieke-ruimtes\.html$ /diensten/publieke-ruimtes/ [R=301,L]
+  RewriteRule ^gevelreiniging\.html$ /diensten/gevelreiniging/ [R=301,L]
+  RewriteRule ^schoonmaak-na-overlijden\.html$ /diensten/schoonmaak-na-overlijden-in-groningen/ [R=301,L]
+
+  # Branches
+  RewriteRule ^branches\.html$ /branches/ [R=301,L]
+  RewriteRule ^onderwijs\.html$ /branches/onderwijs/ [R=301,L]
+  RewriteRule ^zorg\.html$ /branches/zorg/ [R=301,L]
+  RewriteRule ^kantoren\.html$ /branches/kantoren/ [R=301,L]
+
+  # Overig
+  RewriteRule ^projecten\.html$ /onze-projecten/ [R=301,L]
+  RewriteRule ^over-ons\.html$ /over-ons/ [R=301,L]
+  RewriteRule ^spoed\.html$ /spoed-schoonmaak-groningen/ [R=301,L]
+  RewriteRule ^contact\.html$ /contact/ [R=301,L]
+</IfModule>
