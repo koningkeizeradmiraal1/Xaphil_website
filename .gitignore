@@ -11,3 +11,6 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# oude platte HTML (vervangen door map-structuur)
+backup_flat/

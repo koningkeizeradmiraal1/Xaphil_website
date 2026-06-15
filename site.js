@@ -2,9 +2,9 @@
 (function () {
   var page = document.body.getAttribute('data-page') || '';
 
-  // Officieel logo. Lokaal bestand 'images/logo.png' heeft voorrang; valt anders
+  // Officieel logo. Lokaal bestand '/images/logo.png' heeft voorrang; valt anders
   // terug op het logo dat al op de eigen server staat.
-  var LOGO_LOCAL = 'images/logo.png';
+  var LOGO_LOCAL = '/images/logo.png';
   var LOGO_REMOTE = 'https://xaphilfacilityservices.websitebijnaklaar.nl/wp-content/uploads/2024/11/logo.png';
   var logoSVG =
     '<img class="logo-full" src="' + LOGO_LOCAL + '" alt="Xaphil Facility Services" ' +
@@ -13,19 +13,19 @@
   var defSvg = '';
 
   var diensten = [
-    ['glasbewassing.html', 'Glasbewassing'],
-    ['opleveringsschoonmaak.html', 'Opleveringsschoonmaak'],
-    ['verzamelwoede.html', 'Schoonmaak na verzamelwoede'],
-    ['nachtclub-event.html', 'Nachtclub & eventreiniging'],
-    ['extreme-schoonmaak.html', 'Extreme schoonmaak na incidenten'],
-    ['publieke-ruimtes.html', 'Schoonmaak publieke ruimtes'],
-    ['gevelreiniging.html', 'Gevelreiniging'],
-    ['schoonmaak-na-overlijden.html', 'Schoonmaak na overlijden']
+    ['/diensten/glasbewassing/', 'Glasbewassing'],
+    ['/diensten/opleveringsschoonmaak/', 'Opleveringsschoonmaak'],
+    ['/diensten/hoarding-verzamelwoede-schoonmaak/', 'Schoonmaak na verzamelwoede'],
+    ['/diensten/nachtclub-en-eventreiniging/', 'Nachtclub & eventreiniging'],
+    ['/diensten/extreme-schoonmaak-na-incidenten/', 'Extreme schoonmaak na incidenten'],
+    ['/diensten/publieke-ruimtes/', 'Schoonmaak publieke ruimtes'],
+    ['/diensten/gevelreiniging/', 'Gevelreiniging'],
+    ['/diensten/schoonmaak-na-overlijden-in-groningen/', 'Schoonmaak na overlijden']
   ];
   var branches = [
-    ['onderwijs.html', 'Schoonmaak onderwijs'],
-    ['zorg.html', 'Schoonmaak zorg'],
-    ['kantoren.html', 'Kantoorschoonmaak']
+    ['/branches/onderwijs/', 'Schoonmaak onderwijs'],
+    ['/branches/zorg/', 'Schoonmaak zorg'],
+    ['/branches/kantoren/', 'Kantoorschoonmaak']
   ];
 
   function drop(items) {
@@ -41,34 +41,34 @@
     '<a href="mailto:info@xaphilfacilityservices.com">✉️ info@xaphilfacilityservices.com</a></div>' +
     '</div></div>' +
     '<header class="nav"><div class="wrap">' +
-    '<a href="index.html" class="logo">' + logoSVG + '</a>' +
+    '<a href="/" class="logo">' + logoSVG + '</a>' +
     '<nav class="main">' +
-    '<a href="index.html" data-p="home">Home</a>' +
-    '<div class="has-drop" data-p="diensten"><a href="diensten.html">Diensten <span class="caret">▼</span></a>' + drop(diensten) + '</div>' +
-    '<div class="has-drop" data-p="branches"><a href="branches.html">Branches <span class="caret">▼</span></a>' + drop(branches) + '</div>' +
-    '<a href="projecten.html" data-p="projecten">Projecten</a>' +
-    '<a href="over-ons.html" data-p="over-ons">Over ons</a>' +
-    '<a href="spoed.html" data-p="spoed">Spoed</a>' +
-    '<a href="contact.html" data-p="contact">Contact</a>' +
+    '<a href="/" data-p="home">Home</a>' +
+    '<div class="has-drop" data-p="diensten"><a href="/diensten/">Diensten <span class="caret">▼</span></a>' + drop(diensten) + '</div>' +
+    '<div class="has-drop" data-p="branches"><a href="/branches/">Branches <span class="caret">▼</span></a>' + drop(branches) + '</div>' +
+    '<a href="/onze-projecten/" data-p="projecten">Projecten</a>' +
+    '<a href="/over-ons/" data-p="over-ons">Over ons</a>' +
+    '<a href="/spoed-schoonmaak-groningen/" data-p="spoed">Spoed</a>' +
+    '<a href="/contact/" data-p="contact">Contact</a>' +
     '</nav>' +
     '<div class="nav-cta">' +
     '<a href="tel:+31850606838" class="btn btn-dark">Bel ons</a>' +
-    '<a href="contact.html" class="btn btn-primary">Offerte aanvragen</a>' +
+    '<a href="/contact/" class="btn btn-primary">Offerte aanvragen</a>' +
     '<button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>' +
     '</div>' +
     '</div></header>';
 
   var footHTML =
     '<footer><div class="wrap"><div class="foot-grid">' +
-    '<div class="foot-brand"><a href="index.html" class="logo">' + logoSVG + '</a>' +
+    '<div class="foot-brand"><a href="/" class="logo">' + logoSVG + '</a>' +
     '<p>Uw partner in specialistische en professionele schoonmaak in Groningen en omgeving.</p></div>' +
     '<div><h4>Menu</h4>' +
-    '<a href="diensten.html">Diensten</a><a href="branches.html">Branches</a>' +
-    '<a href="projecten.html">Projecten</a><a href="over-ons.html">Over ons</a><a href="contact.html">Contact</a></div>' +
+    '<a href="/diensten/">Diensten</a><a href="/branches/">Branches</a>' +
+    '<a href="/onze-projecten/">Projecten</a><a href="/over-ons/">Over ons</a><a href="/contact/">Contact</a></div>' +
     '<div><h4>Diensten</h4>' +
-    '<a href="glasbewassing.html">Glasbewassing</a><a href="opleveringsschoonmaak.html">Opleveringsschoonmaak</a>' +
-    '<a href="extreme-schoonmaak.html">Extreme schoonmaak</a><a href="gevelreiniging.html">Gevelreiniging</a>' +
-    '<a href="spoed.html">Spoeddienst 24/7</a></div>' +
+    '<a href="/diensten/glasbewassing/">Glasbewassing</a><a href="/diensten/opleveringsschoonmaak/">Opleveringsschoonmaak</a>' +
+    '<a href="/diensten/extreme-schoonmaak-na-incidenten/">Extreme schoonmaak</a><a href="/diensten/gevelreiniging/">Gevelreiniging</a>' +
+    '<a href="/spoed-schoonmaak-groningen/">Spoeddienst 24/7</a></div>' +
     '<div class="foot-contact"><h4>Contact</h4>' +
     '<a href="tel:+31850606838"><b>085 06 06 838</b></a>' +
     '<a href="mailto:info@xaphilfacilityservices.com">info@xaphilfacilityservices.com</a>' +
