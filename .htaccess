@@ -30,4 +30,8 @@
   RewriteRule ^over-ons\.html$ /over-ons/ [R=301,L]
   RewriteRule ^spoed\.html$ /spoed-schoonmaak-groningen/ [R=301,L]
   RewriteRule ^contact\.html$ /contact/ [R=301,L]
+
+  # Samengevoegde plaatspagina's -> losse plaatspagina's
+  RewriteRule ^glasbewassing-hoogezand-sappemeer/?$ /glasbewassing-hoogezand/ [R=301,L]
+  RewriteRule ^glasbewassing-eelde-paterswolde/?$ /glasbewassing-eelde/ [R=301,L]
 </IfModule>
