@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bereken je glasbewassingsprijs | Xaphil Facility Services</title>
+<meta name="description" content="Bereken direct en gratis je prijs voor glasbewassing in Groningen. Vul je gegevens in en weet binnen een minuut waar je aan toe bent.">
+<link rel="stylesheet" href="/styles.css?v=3">
+<style>
+  :root{--navy:#1c2532;--navy-2:#1f3a4d;--blue:#1ba4dd;--blue-dark:#1488bb;--gold:#d4a72f;--gold-light:#ecd884;--mint:#e3f4fc;--ink:#1c2532;--muted:#5b6776;--line:#e6eaef;--bg:#fff;--bg-soft:#f5f8fa;--radius:18px;--shadow:0 18px 50px -22px rgba(28,37,50,.35)}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--ink)}
+  .tool-wrap{max-width:720px;margin:0 auto;padding:40px 20px}
+  .steps-bar{display:flex;gap:8px;margin:0 0 26px}
+  .steps-bar .st{flex:1;height:6px;border-radius:999px;background:var(--line);transition:.3s}
+  .steps-bar .st.on{background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+  .step{display:none;animation:fade .3s ease}
+  .step.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
+  .panel h2{font-size:1.5rem;margin-bottom:6px}
+  .panel .lead{color:var(--muted);margin-bottom:22px}
+  .ic-badge{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,var(--gold),var(--gold-light));margin-bottom:16px}
+  .ic-badge svg{width:30px;height:30px;color:var(--navy);stroke-width:1.7}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-weight:700;font-size:.86rem;margin-bottom:6px}
+  .fld input,.fld select{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:13px;font:inherit;background:var(--bg-soft);transition:.2s}
+  .fld input:focus,.fld select:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(27,164,221,.15)}
+  .hint{font-size:.8rem;color:var(--muted);margin-top:6px}
+  .err{color:#c0392b;font-size:.85rem;margin-top:8px;display:none}
+  .actions{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .actions .btn{flex:1;justify-content:center;min-width:140px}
+  .map-frame{border-radius:16px;overflow:hidden;border:1px solid var(--line);height:300px;margin-bottom:8px;background:var(--bg-soft)}
+  .map-frame iframe{width:100%;height:100%;border:0}
+  .trust{display:flex;gap:14px;align-items:center;background:var(--mint);border-radius:14px;padding:12px 16px;margin-top:18px;font-size:.86rem;color:var(--blue-dark)}
+  .trust svg{width:22px;height:22px;flex:none}
+  /* result */
+  .result-price{font-size:3rem;font-weight:800;letter-spacing:-.03em;color:var(--navy)}
+  .result-price small{font-size:1rem;font-weight:600;color:var(--muted)}
+  .badge-ok{display:inline-flex;align-items:center;gap:8px;background:#e7f9ee;color:#1c9d52;font-weight:700;font-size:.85rem;padding:7px 14px;border-radius:999px;margin-bottom:14px}
+  .badge-mw{display:inline-flex;align-items:center;gap:8px;background:var(--mint);color:var(--blue-dark);font-weight:700;font-size:.85rem;padding:7px 14px;border-radius:999px;margin-bottom:14px}
+  .badge-ok svg,.badge-mw svg{width:16px;height:16px}
+  .checks{list-style:none;display:grid;gap:11px;margin:18px 0}
+  .checks li{display:flex;gap:11px;align-items:flex-start;color:#3a4654;font-size:.95rem}
+  .checks li svg{width:20px;height:20px;color:var(--blue);flex:none;margin-top:1px}
+  .summary{background:var(--bg-soft);border-radius:14px;padding:16px 18px;margin:18px 0;font-size:.9rem}
+  .summary div{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line)}
+  .summary div:last-child{border-bottom:none}
+  .summary span{color:var(--muted)}
+  .summary b{color:var(--ink)}
+  .done-msg{display:none;text-align:center;padding:14px}
+  .done-msg .ic-badge{margin:0 auto 14px}
+</style>
+</head>
+<body data-page="diensten">
+<div id="site-header"></div>
+
+<section class="banner has-img">
+  <div class="bg"><img src="/images/glasbewassing-hoofd.png" alt="Glasbewassing door Xaphil"><div class="ov"></div></div>
+  <div class="wrap">
+    <div class="crumb"><a href="/">Home</a><span>/</span><a href="/diensten/glasbewassing/">Glasbewassing</a><span>/</span>Prijs berekenen</div>
+    <span class="eyebrow on-dark">Glasbewassing-calculator</span>
+    <h1>Bereken direct je prijs</h1>
+    <p>Binnen een minuut weet je waar je aan toe bent. Vaste prijs van € 45, zonder voorrijkosten, met streeploos osmosewater.</p>
+  </div>
+</section>
+
+<section>
+  <div class="tool-wrap">
+    <div class="steps-bar">
+      <div class="st on" data-s="1"></div>
+      <div class="st" data-s="2"></div>
+      <div class="st" data-s="3"></div>
+      <div class="st" data-s="4"></div>
+    </div>
+
+    <!-- Step 1: contactgegevens (gate) -->
+    <div class="step active" id="step1">
+      <div class="panel">
+        <div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></div>
+        <h2>Eerst even je gegevens</h2>
+        <p class="lead">Laat je e‑mail en telefoonnummer achter, dan kun je meteen je prijs berekenen. We gebruiken dit alleen om contact met je op te nemen over je aanvraag.</p>
+        <div class="row2">
+          <div class="fld"><label for="email">E‑mailadres</label><input id="email" type="email" placeholder="naam@voorbeeld.nl" required></div>
+          <div class="fld"><label for="tel">Telefoonnummer</label><input id="tel" type="tel" placeholder="06 ..." required></div>
+        </div>
+        <p class="err" id="err1">Vul a.u.b. een geldig e‑mailadres én telefoonnummer in.</p>
+        <div class="actions">
+          <a class="btn btn-primary" onclick="startTool()">Start de berekening →</a>
+        </div>
+        <div class="trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg> Je gegevens zijn veilig en worden niet gedeeld met derden.</div>
+      </div>
+    </div>
+
+    <!-- Step 2: adres + kaart -->
+    <div class="step" id="step2">
+      <div class="panel">
+        <div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c5-5 8-8 8-12a8 8 0 10-16 0c0 4 3 7 8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <h2>Wat is het adres?</h2>
+        <p class="lead">Vul het adres in waar de ramen gewassen moeten worden. We tonen het op de kaart zodat je kunt controleren of het klopt.</p>
+        <div class="row2">
+          <div class="fld"><label for="straat">Straat + huisnummer</label><input id="straat" type="text" placeholder="Verlengde Bremenweg 15"></div>
+          <div class="fld"><label for="plaats">Postcode + plaats</label><input id="plaats" type="text" placeholder="9723 JV Groningen"></div>
+        </div>
+        <div class="actions" style="margin-top:4px;margin-bottom:18px">
+          <a class="btn btn-outline" onclick="showMap()">Toon op de kaart</a>
+        </div>
+        <div class="map-frame"><iframe id="map" title="Kaart" loading="lazy"></iframe></div>
+        <p class="err" id="err2">Vul a.u.b. een adres in.</p>
+        <div class="actions">
+          <a class="btn btn-dark" onclick="goStep(1)">← Terug</a>
+          <a class="btn btn-primary" onclick="toStep3()">Volgende →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: ramen + hoogte -->
+    <div class="step" id="step3">
+      <div class="panel">
+        <div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 12h18M12 3v18"/></svg></div>
+        <h2>Over de ramen</h2>
+        <p class="lead">Een schatting is prima — we stemmen het exacte werk altijd met je af.</p>
+        <div class="fld">
+          <label for="ramen">Hoeveel ramen ongeveer?</label>
+          <input id="ramen" type="number" min="1" max="200" placeholder="bijv. 8">
+          <p class="hint">Tel alle ramen die gewassen moeten worden (binnen + buiten telt als 1).</p>
+        </div>
+        <div class="fld">
+          <label for="hoogte">Hoogte van het bovenste raam</label>
+          <select id="hoogte">
+            <option value="bg">Begane grond — tot ca. 3 m</option>
+            <option value="1">1e verdieping — tot ca. 6 m</option>
+            <option value="2">2e verdieping — tot ca. 8 m</option>
+            <option value="hoog">Hoger dan 8 m (3e verdieping of hoger)</option>
+          </select>
+          <p class="hint">Hoger dan 8 m? Dan maken we een veilige maatwerkofferte.</p>
+        </div>
+        <p class="err" id="err3">Vul a.u.b. het aantal ramen in.</p>
+        <div class="actions">
+          <a class="btn btn-dark" onclick="goStep(2)">← Terug</a>
+          <a class="btn btn-primary" onclick="calculate()">Bereken mijn prijs →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: resultaat -->
+    <div class="step" id="step4">
+      <div class="panel" id="resultPanel"></div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/site.js?v=3"></script>
+<script>
+  var EMAIL_ENDPOINT = "https://formsubmit.co/ajax/info@xaphilfacilityservices.com";
+  var data = {};
+
+  function setBar(n){
+    document.querySelectorAll('.steps-bar .st').forEach(function(el){
+      el.classList.toggle('on', parseInt(el.dataset.s) <= n);
+    });
+  }
+  function goStep(n){
+    document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
+    document.getElementById('step'+n).classList.add('active');
+    setBar(n);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function send(payload){
+    try{
+      fetch(EMAIL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
+    }catch(e){}
+  }
+  function startTool(){
+    var email=document.getElementById('email').value.trim();
+    var tel=document.getElementById('tel').value.trim();
+    var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && tel.replace(/[^0-9]/g,'').length>=8;
+    if(!ok){document.getElementById('err1').style.display='block';return;}
+    document.getElementById('err1').style.display='none';
+    data.email=email; data.tel=tel;
+    send({_subject:'Glasbewassing-tool gestart (nieuwe lead)', Email:email, Telefoon:tel, Status:'Tool gestart — nog niet afgerond'});
+    goStep(2);
+  }
+  function showMap(){
+    var adres=(document.getElementById('straat').value.trim()+' '+document.getElementById('plaats').value.trim()).trim();
+    if(!adres){document.getElementById('err2').style.display='block';return;}
+    document.getElementById('err2').style.display='none';
+    document.getElementById('map').src='https://www.google.com/maps?q='+encodeURIComponent(adres)+'&output=embed';
+  }
+  function toStep3(){
+    var adres=(document.getElementById('straat').value.trim()+' '+document.getElementById('plaats').value.trim()).trim();
+    if(!adres){document.getElementById('err2').style.display='block';return;}
+    data.adres=adres; goStep(3);
+  }
+  function calculate(){
+    var ramen=parseInt(document.getElementById('ramen').value,10);
+    if(!ramen || ramen<1){document.getElementById('err3').style.display='block';return;}
+    document.getElementById('err3').style.display='none';
+    var hsel=document.getElementById('hoogte');
+    var hoogte=hsel.options[hsel.selectedIndex].text;
+    var teHoog=(hsel.value==='hoog');
+    data.ramen=ramen; data.hoogte=hoogte;
+    var maatwerk = ramen>10 || teHoog;
+    data.uitkomst = maatwerk ? 'Maatwerkofferte' : 'Vaste prijs € 45';
+
+    var summary='<div class="summary">'
+      +'<div><span>Adres</span><b>'+esc(data.adres)+'</b></div>'
+      +'<div><span>Aantal ramen</span><b>'+ramen+'</b></div>'
+      +'<div><span>Hoogte bovenste raam</span><b>'+esc(hoogte)+'</b></div>'
+      +'<div><span>Contact</span><b>'+esc(data.email)+'</b></div>'
+      +'</div>';
+
+    var html;
+    if(maatwerk){
+      var reden = ramen>10 ? 'meer dan 10 ramen' : 'het bovenste raam is hoger dan 8 m';
+      html='<div class="ic-badge" style="background:linear-gradient(145deg,var(--blue),#5fc4ee)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></div>'
+        +'<span class="badge-mw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg> Maatwerkofferte</span>'
+        +'<h2>We maken een offerte op maat</h2>'
+        +'<p class="lead">Omdat '+reden+', stellen we een passende offerte voor je op. We nemen snel contact met je op via de gegevens die je hebt achtergelaten.</p>'
+        +summary
+        +'<div class="actions"><a class="btn btn-primary" onclick="finish(true)">Vraag mijn maatwerkofferte aan</a></div>';
+    } else {
+      html='<div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div>'
+        +'<span class="badge-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Goed nieuws</span>'
+        +'<h2>Jouw prijs</h2>'
+        +'<div class="result-price">€ 45 <small>vaste prijs</small></div>'
+        +'<ul class="checks">'
+        +'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Geen voorrijkosten</li>'
+        +'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Met zuiver osmosewater — streeploos resultaat</li>'
+        +'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Vakkundig en verzekerd</li>'
+        +'</ul>'
+        +summary
+        +'<p class="hint">Dit is een indicatieve prijs. We bevestigen de afspraak na je aanvraag.</p>'
+        +'<div class="actions"><a class="btn btn-primary" onclick="finish(false)">Plan mijn glasbewassing in</a></div>';
+    }
+    html+='<div class="done-msg" id="doneMsg"><div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div><h2>Bedankt!</h2><p class="lead">We hebben je aanvraag ontvangen en nemen snel contact met je op. Tot snel!</p></div>';
+    document.getElementById('resultPanel').innerHTML=html;
+    goStep(4);
+  }
+  function finish(maatwerk){
+    send({
+      _subject: maatwerk ? 'Glasbewassing — MAATWERK aanvraag' : 'Glasbewassing — aanvraag € 45',
+      Email:data.email, Telefoon:data.tel, Adres:data.adres,
+      'Aantal ramen':data.ramen, 'Hoogte bovenste raam':data.hoogte, Uitkomst:data.uitkomst
+    });
+    document.querySelector('#resultPanel .actions').style.display='none';
+    document.getElementById('doneMsg').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+</script>
+</body>
+</html>
