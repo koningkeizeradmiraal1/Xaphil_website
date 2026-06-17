@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beschikbaarheid doorgeven | Xaphil Facility Services</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/styles.css?v=3">
+<style>
+  :root{--navy:#1c2532;--navy-2:#1f3a4d;--blue:#1ba4dd;--blue-dark:#1488bb;--gold:#d4a72f;--gold-light:#ecd884;--mint:#e3f4fc;--ink:#1c2532;--muted:#5b6776;--line:#e6eaef;--bg:#fff;--bg-soft:#f5f8fa;--radius:18px;--shadow:0 18px 50px -22px rgba(28,37,50,.35)}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--ink)}
+  .av-wrap{max-width:680px;margin:0 auto;padding:40px 20px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
+  .weekbox{background:var(--mint);border-radius:14px;padding:14px 18px;margin:0 0 22px;font-weight:700;color:var(--blue-dark);display:flex;align-items:center;gap:10px}
+  .weekbox svg{width:22px;height:22px;flex:none}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-weight:700;font-size:.86rem;margin-bottom:6px}
+  .fld input,.fld textarea,.fld select{width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:12px;font:inherit;background:var(--bg-soft);transition:.2s}
+  .fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(27,164,221,.15)}
+  .dayrow{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  .dayrow:last-of-type{border-bottom:none}
+  .dayrow .d{font-weight:700;font-size:.95rem}
+  .dayrow .d small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
+  .err{color:#c0392b;font-size:.85rem;margin-top:8px;display:none}
+  .done{display:none;text-align:center;padding:14px}
+  .done .ic{width:60px;height:60px;border-radius:50%;background:#e7f9ee;color:#1c9d52;display:grid;place-items:center;margin:0 auto 14px}
+  .done .ic svg{width:30px;height:30px}
+  .hint{font-size:.8rem;color:var(--muted);margin-top:14px}
+</style>
+</head>
+<body data-page="">
+<div id="site-header"></div>
+
+<section class="banner">
+  <div class="wrap">
+    <span class="eyebrow on-dark">Interne pagina · medewerkers</span>
+    <h1>Beschikbaarheid doorgeven</h1>
+    <p>Geef hieronder je beschikbaarheid voor volgende week door. Doe dit bij voorkeur vóór donderdag, zodat we de planning op tijd rond hebben.</p>
+  </div>
+</section>
+
+<section>
+  <div class="av-wrap">
+    <div class="panel" id="panel">
+      <div class="weekbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+        <span id="weekLabel">Volgende week</span>
+      </div>
+      <form id="availForm" onsubmit="return submitAvail(event)">
+        <div class="fld">
+          <label for="naam">Je naam</label>
+          <input id="naam" name="Naam" type="text" placeholder="Voor- en achternaam" required>
+        </div>
+        <input type="hidden" id="weekField" name="Week">
+        <label style="display:block;font-weight:700;font-size:.86rem;margin:6px 0 4px">Beschikbaarheid per dag</label>
+        <div id="days"></div>
+        <div class="fld" style="margin-top:18px">
+          <label for="opm">Opmerkingen (optioneel)</label>
+          <textarea id="opm" name="Opmerkingen" placeholder="Bijv. liever geen vroege diensten, of een vrije dag..."></textarea>
+        </div>
+        <p class="err" id="err">Vul a.u.b. je naam in.</p>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Beschikbaarheid versturen</button>
+        <p class="hint">Je gegevens worden alleen intern gebruikt voor de planning.</p>
+      </form>
+      <div class="done" id="done">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div>
+        <h2 style="font-size:1.4rem">Bedankt!</h2>
+        <p style="color:var(--muted)" id="doneText">Je beschikbaarheid is doorgegeven.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/site.js?v=3"></script>
+<script>
+  var PLANNING_EMAIL = "https://formsubmit.co/ajax/personeel@xaphil.com";
+  var DAGEN=['ma','di','wo','do','vr','za','zo'];
+  var MND=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  var OPTIES=['Niet beschikbaar','Hele dag','Ochtend','Middag','Avond','Ochtend + middag','Middag + avond'];
+
+  function isoWeek(d){var t=new Date(d);t.setHours(0,0,0,0);t.setDate(t.getDate()+3-((t.getDay()+6)%7));var w1=new Date(t.getFullYear(),0,4);return 1+Math.round(((t-w1)/86400000-3+((w1.getDay()+6)%7))/7);}
+
+  (function init(){
+    var d=new Date(); d.setHours(0,0,0,0);
+    var day=(d.getDay()+6)%7;                 // 0=ma .. 6=zo
+    var monThis=new Date(d); monThis.setDate(d.getDate()-day);
+    var mon=new Date(monThis); mon.setDate(monThis.getDate()+7);  // maandag volgende week
+    var sun=new Date(mon); sun.setDate(mon.getDate()+6);
+    var label='Week '+isoWeek(mon)+' — '+mon.getDate()+' '+MND[mon.getMonth()]+' t/m '+sun.getDate()+' '+MND[sun.getMonth()]+' '+sun.getFullYear();
+    document.getElementById('weekLabel').textContent=label;
+    document.getElementById('weekField').value=label;
+    var box=document.getElementById('days');
+    for(var i=0;i<7;i++){
+      var dd=new Date(mon); dd.setDate(mon.getDate()+i);
+      var name=DAGEN[i]+' '+String(dd.getDate()).padStart(2,'0')+'-'+String(dd.getMonth()+1).padStart(2,'0');
+      var row=document.createElement('div'); row.className='dayrow';
+      var lbl='<div class="d">'+({'ma':'Maandag','di':'Dinsdag','wo':'Woensdag','do':'Donderdag','vr':'Vrijdag','za':'Zaterdag','zo':'Zondag'})[DAGEN[i]]+'<small>'+dd.getDate()+' '+MND[dd.getMonth()]+'</small></div>';
+      var sel='<select name="'+name+'">'+OPTIES.map(function(o){return '<option>'+o+'</option>';}).join('')+'</select>';
+      row.innerHTML=lbl+sel; box.appendChild(row);
+    }
+  })();
+
+  function submitAvail(e){
+    e.preventDefault();
+    var naam=document.getElementById('naam').value.trim();
+    if(!naam){document.getElementById('err').style.display='block';return false;}
+    document.getElementById('err').style.display='none';
+    var fd=new FormData(document.getElementById('availForm'));
+    var payload={_subject:'Beschikbaarheid — '+naam+' ('+document.getElementById('weekField').value+')'};
+    fd.forEach(function(v,k){payload[k]=v;});
+    fetch(PLANNING_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
+    document.getElementById('availForm').style.display='none';
+    document.getElementById('doneText').textContent='Bedankt '+naam+'! Je beschikbaarheid voor '+document.getElementById('weekField').value+' is doorgegeven.';
+    document.getElementById('done').style.display='block';
+    return false;
+  }
+</script>
+</body>
+</html>

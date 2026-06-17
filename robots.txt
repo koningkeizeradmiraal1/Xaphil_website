@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /backup_flat/
+Disallow: /beschikbaarheid/
 
 Sitemap: https://xaphilfacilityservices.com/sitemap.xml
