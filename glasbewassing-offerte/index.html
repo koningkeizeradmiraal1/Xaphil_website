@@ -38,6 +38,16 @@
   /* result */
   .result-price{font-size:3rem;font-weight:800;letter-spacing:-.03em;color:var(--navy)}
   .result-price small{font-size:1rem;font-weight:600;color:var(--muted)}
+  .plans{display:grid;gap:12px;margin:0 0 22px}
+  .plan{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1.5px solid var(--line);border-radius:15px;padding:16px 18px;cursor:pointer;transition:.18s;position:relative}
+  .plan:hover{border-color:var(--blue)}
+  .plan.sel{border-color:var(--blue);background:var(--mint)}
+  .plan .p-info b{display:block;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+  .plan .p-info span{font-size:.85rem;color:var(--muted)}
+  .plan .p-price{font-size:1.5rem;font-weight:800;color:var(--navy);white-space:nowrap}
+  .plan .p-price small{font-size:.78rem;font-weight:600;color:var(--muted)}
+  .p-tag{font-size:.68rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:var(--gold-light);color:#5a4408;padding:3px 8px;border-radius:999px}
+  .p-tag.p-best{background:var(--blue);color:#fff}
   .badge-ok{display:inline-flex;align-items:center;gap:8px;background:#e7f9ee;color:#1c9d52;font-weight:700;font-size:.85rem;padding:7px 14px;border-radius:999px;margin-bottom:14px}
   .badge-mw{display:inline-flex;align-items:center;gap:8px;background:var(--mint);color:var(--blue-dark);font-weight:700;font-size:.85rem;padding:7px 14px;border-radius:999px;margin-bottom:14px}
   .badge-ok svg,.badge-mw svg{width:16px;height:16px}
@@ -228,10 +238,16 @@
         +summary
         +'<div class="actions"><a class="btn btn-primary" onclick="finish(true)">Vraag mijn maatwerkofferte aan</a></div>';
     } else {
+      data.plan='Eenmalig — € 45 per keer';
       html='<div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div>'
         +'<span class="badge-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Goed nieuws</span>'
         +'<h2>Jouw prijs</h2>'
-        +'<div class="result-price">€ 45 <small>vaste prijs</small></div>'
+        +'<p class="lead" style="margin-bottom:16px">Kies wat het beste past — een losse beurt of voordeliger met een abonnement.</p>'
+        +'<div class="plans" id="plans">'
+        +'<div class="plan sel" data-plan="Eenmalig — € 45 per keer" onclick="pickPlan(this)"><div class="p-info"><b>Eenmalig</b><span>Losse beurt, wanneer je wilt</span></div><div class="p-price">€ 45<small>/ keer</small></div></div>'
+        +'<div class="plan" data-plan="Abonnement 4× per jaar — € 40 per keer" onclick="pickPlan(this)"><div class="p-info"><b>4× per jaar <span class="p-tag">bespaar € 5</span></b><span>Elk kwartaal blinkende ramen</span></div><div class="p-price">€ 40<small>/ keer</small></div></div>'
+        +'<div class="plan" data-plan="Abonnement 6× per jaar — € 37,50 per keer" onclick="pickPlan(this)"><div class="p-info"><b>6× per jaar <span class="p-tag p-best">voordeligst</span></b><span>Elke 2 maanden, het hele jaar fris</span></div><div class="p-price">€ 37,50<small>/ keer</small></div></div>'
+        +'</div>'
         +'<ul class="checks">'
         +'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Geen voorrijkosten</li>'
         +'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Met zuiver osmosewater — streeploos resultaat</li>'
@@ -251,6 +267,11 @@
     html+='<div class="done-msg" id="doneMsg"><div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div><h2>Bedankt!</h2><p class="lead" id="doneText">We hebben je aanvraag ontvangen en nemen snel contact met je op. Tot snel!</p></div>';
     document.getElementById('resultPanel').innerHTML=html;
     goStep(4);
+  }
+  function pickPlan(el){
+    document.querySelectorAll('#plans .plan').forEach(function(p){p.classList.remove('sel')});
+    el.classList.add('sel');
+    data.plan=el.dataset.plan;
   }
   function showPlanner(){
     document.getElementById('planBtn').style.display='none';
@@ -282,6 +303,7 @@
       Email:data.email, Telefoon:data.tel, Adres:data.adres,
       'Aantal ramen':data.ramen, 'Hoogte bovenste raam':data.hoogte, Uitkomst:data.uitkomst
     };
+    if(data.plan) payload['Gekozen pakket']=data.plan;
     if(data.datum) payload['Gewenste dag']=data.datum;
     send(payload);
     document.querySelectorAll('#resultPanel .actions').forEach(function(a){a.style.display='none'});
