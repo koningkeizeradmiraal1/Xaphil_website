@@ -321,3 +321,16 @@ footer a:hover{color:var(--teal)}
 .floaters a:hover{transform:scale(1.08)}
 .fl-wa{background:#25d366}
 .fl-tel{background:var(--teal)}
+
+/* Cookie-melding */
+#cookiebar{position:fixed;left:18px;right:18px;bottom:18px;z-index:70;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);max-width:780px;margin:0 auto}
+#cookiebar .cc-inner{display:flex;align-items:center;gap:18px;padding:16px 20px;flex-wrap:wrap}
+#cookiebar span{font-size:.88rem;color:var(--muted);flex:1;min-width:230px}
+#cookiebar a{color:var(--blue-dark);text-decoration:underline}
+#cookiebar .cc-btns{display:flex;gap:10px}
+#cookiebar button{font:inherit;font-weight:700;font-size:.88rem;padding:11px 20px;border-radius:11px;cursor:pointer;border:none;transition:.15s}
+#cookiebar .cc-no{background:var(--bg-soft);color:var(--ink);border:1px solid var(--line)}
+#cookiebar .cc-no:hover{background:#eceff3}
+#cookiebar .cc-yes{background:var(--teal);color:#fff}
+#cookiebar .cc-yes:hover{background:var(--teal-dark)}
+@media(max-width:560px){#cookiebar .cc-btns{width:100%}#cookiebar button{flex:1}}
