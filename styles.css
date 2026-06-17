@@ -238,6 +238,15 @@ section.tight{padding:60px 0}
 .google-band{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:38px;color:var(--muted);font-size:.95rem;flex-wrap:wrap}
 .google-band .score{font-weight:800;color:var(--ink);font-size:1.1rem}
 .google-band .stars{color:#f6b21b}
+.gbadge{display:inline-flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 20px;box-shadow:0 10px 26px -16px rgba(28,37,50,.5);transition:.2s;text-decoration:none}
+.gbadge:hover{transform:translateY(-2px);box-shadow:0 16px 32px -16px rgba(28,37,50,.5)}
+.gbadge .g-logo{width:34px;height:34px;flex:none}
+.gbadge .g-text{display:flex;flex-direction:column;line-height:1.2}
+.gbadge .g-top{font-size:.82rem;font-weight:700;color:var(--ink)}
+.gbadge .g-rate{display:flex;align-items:center;gap:8px}
+.gbadge .g-rate b{font-size:1.35rem;color:var(--ink);font-weight:800}
+.gbadge .g-rate .g-stars{color:#fbbc05;letter-spacing:1px;font-size:1rem}
+.gbadge .g-sub{font-size:.78rem;color:var(--muted)}
 
 /* FAQ */
 .faq{max-width:820px;margin:0 auto}
