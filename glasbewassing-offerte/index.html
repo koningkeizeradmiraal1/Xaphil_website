@@ -49,6 +49,13 @@
   .summary div:last-child{border-bottom:none}
   .summary span{color:var(--muted)}
   .summary b{color:var(--ink)}
+  .days{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+  .day{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:11px 16px;cursor:pointer;transition:.18s;text-align:center;min-width:104px;line-height:1.25}
+  .day:hover{border-color:var(--blue);transform:translateY(-2px)}
+  .day.sel{border-color:var(--blue);background:var(--mint)}
+  .day span{display:block;font-size:.72rem;color:var(--muted);font-weight:600}
+  .day b{display:block;font-size:1rem;color:var(--navy)}
+  .day.sel b{color:var(--blue-dark)}
   .done-msg{display:none;text-align:center;padding:14px}
   .done-msg .ic-badge{margin:0 auto 14px}
 </style>
@@ -231,22 +238,67 @@
         +'<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Vakkundig en verzekerd</li>'
         +'</ul>'
         +summary
-        +'<p class="hint">Dit is een indicatieve prijs. We bevestigen de afspraak na je aanvraag.</p>'
-        +'<div class="actions"><a class="btn btn-primary" onclick="finish(false)">Plan mijn glasbewassing in</a></div>';
+        +'<p class="hint">Dit is een indicatieve prijs.</p>'
+        +'<div class="actions" id="planBtn"><a class="btn btn-primary" onclick="showPlanner()">Plan mijn glasbewassing in →</a></div>'
+        +'<div id="planner" style="display:none;margin-top:18px;border-top:1px solid var(--line);padding-top:20px">'
+        +'<h3 style="font-size:1.15rem;margin-bottom:4px">Kies een dag</h3>'
+        +'<p class="hint" style="margin-top:0">We werken op <b>donderdagen</b>. Kies een datum — we bellen je daarna nog voor een tijdstip.</p>'
+        +'<div class="days" id="days"></div>'
+        +'<p class="err" id="errPlan">Kies a.u.b. een donderdag.</p>'
+        +'<div class="actions"><a class="btn btn-gold" onclick="confirmPlan()">Bevestig afspraak</a></div>'
+        +'</div>';
     }
-    html+='<div class="done-msg" id="doneMsg"><div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div><h2>Bedankt!</h2><p class="lead">We hebben je aanvraag ontvangen en nemen snel contact met je op. Tot snel!</p></div>';
+    html+='<div class="done-msg" id="doneMsg"><div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></div><h2>Bedankt!</h2><p class="lead" id="doneText">We hebben je aanvraag ontvangen en nemen snel contact met je op. Tot snel!</p></div>';
     document.getElementById('resultPanel').innerHTML=html;
     goStep(4);
   }
+  function showPlanner(){
+    document.getElementById('planBtn').style.display='none';
+    var box=document.getElementById('days'); box.innerHTML='';
+    nextThursdays(8).forEach(function(d,i){
+      var iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      var label=fmtDay(d);
+      var el=document.createElement('div'); el.className='day'; el.dataset.iso=iso; el.dataset.label=label;
+      el.innerHTML='<span>donderdag</span><b>'+d.getDate()+' '+monShort(d.getMonth())+'</b>';
+      el.onclick=function(){pickDay(el);};
+      box.appendChild(el);
+    });
+    document.getElementById('planner').style.display='block';
+  }
+  function pickDay(el){
+    document.querySelectorAll('#days .day').forEach(function(d){d.classList.remove('sel')});
+    el.classList.add('sel');
+    data.datum='donderdag '+el.dataset.label.replace(/^do /,'');
+    data.datumIso=el.dataset.iso;
+    document.getElementById('errPlan').style.display='none';
+  }
+  function confirmPlan(){
+    if(!data.datumIso){document.getElementById('errPlan').style.display='block';return;}
+    finish(false);
+  }
   function finish(maatwerk){
-    send({
-      _subject: maatwerk ? 'Glasbewassing — MAATWERK aanvraag' : 'Glasbewassing — aanvraag € 45',
+    var payload={
+      _subject: maatwerk ? 'Glasbewassing — MAATWERK aanvraag' : 'Glasbewassing — afspraak € 45',
       Email:data.email, Telefoon:data.tel, Adres:data.adres,
       'Aantal ramen':data.ramen, 'Hoogte bovenste raam':data.hoogte, Uitkomst:data.uitkomst
-    });
-    document.querySelector('#resultPanel .actions').style.display='none';
+    };
+    if(data.datum) payload['Gewenste dag']=data.datum;
+    send(payload);
+    document.querySelectorAll('#resultPanel .actions').forEach(function(a){a.style.display='none'});
+    var pl=document.getElementById('planner'); if(pl) pl.style.display='none';
+    var dt=document.getElementById('doneText');
+    if(dt && data.datum) dt.textContent='We hebben je aanvraag ontvangen voor '+data.datum+'. We bellen je nog voor een tijdstip. Tot snel!';
     document.getElementById('doneMsg').style.display='block';
   }
+  function nextThursdays(count){
+    var out=[], d=new Date(); d.setHours(0,0,0,0);
+    var diff=(4 - d.getDay() + 7) % 7;
+    d.setDate(d.getDate()+diff);
+    for(var i=0;i<count;i++){ out.push(new Date(d)); d.setDate(d.getDate()+7); }
+    return out;
+  }
+  function monShort(m){return ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'][m];}
+  function fmtDay(d){return 'do '+d.getDate()+' '+monShort(d.getMonth())+' '+d.getFullYear();}
   function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
   // Gegevens overnemen als bezoeker via de homepage-widget start
