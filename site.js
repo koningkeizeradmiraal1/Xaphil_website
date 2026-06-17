@@ -75,7 +75,7 @@
     '<a href="https://maps.google.com/?cid=4735427590661068135" target="_blank" rel="noopener">Verlengde Bremenweg 15<br>9723 JV Groningen</a></div>' +
     '</div><div class="foot-bottom">' +
     '<span>© 2026 Xaphil Facility Services · Alle rechten voorbehouden</span>' +
-    '<span><a href="/privacyverklaring/">Privacyverklaring</a></span></div></div></footer>';
+    '<span><a href="/privacyverklaring/">Privacyverklaring</a> · <a href="/algemene-voorwaarden/">Algemene voorwaarden</a></span></div></div></footer>';
 
   var floatHTML =
     '<div class="floaters">' +
