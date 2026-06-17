@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /backup_flat/
+
+Sitemap: https://xaphilfacilityservices.com/sitemap.xml
