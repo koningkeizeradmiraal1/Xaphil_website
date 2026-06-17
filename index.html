@@ -6,6 +6,24 @@
 <title>Schoonmaakbedrijf Groningen | Xaphil Facility Services</title>
 <meta name="description" content="Xaphil Facility Services, uw partner in specialistische en professionele schoonmaak in Groningen en omgeving. Schoonmaakproject? Bel +31 (0)85 06 06 838.">
 <link rel="stylesheet" href="/styles.css?v=3">
+<style>
+  .calc-cta{position:relative;overflow:hidden;background:radial-gradient(700px 400px at 85% -20%,#33465c,var(--navy));color:#fff;border-radius:24px;padding:42px;display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+  .calc-cta::after{content:"";position:absolute;right:-80px;bottom:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(212,167,47,.22),transparent 65%)}
+  .calc-cta .info{position:relative;z-index:2}
+  .calc-cta h2{font-size:clamp(1.6rem,3vw,2.1rem);margin:12px 0 10px}
+  .calc-cta h2 .g{color:var(--gold-light)}
+  .calc-cta p{color:#cdd6e2;font-size:1rem;max-width:420px}
+  .calc-cta .mini{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:#aab8c8}
+  .calc-cta .mini span{display:inline-flex;align-items:center;gap:6px}
+  .calc-cta .mini svg{width:16px;height:16px;color:var(--gold-light)}
+  .calc-form{position:relative;z-index:2;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px}
+  .calc-form label{display:block;font-size:.8rem;font-weight:700;margin:0 0 6px;color:#dbe4ee}
+  .calc-form input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.95);font:inherit;margin-bottom:13px;color:var(--ink)}
+  .calc-form input:focus{outline:none;box-shadow:0 0 0 3px rgba(212,167,47,.4)}
+  .calc-form .btn{width:100%;justify-content:center}
+  .calc-err{color:#ffd9d9;font-size:.83rem;margin-top:8px;display:none}
+  @media(max-width:760px){.calc-cta{grid-template-columns:1fr;padding:30px}}
+</style>
 </head>
 <body data-page="home">
 <div id="site-header"></div>
@@ -74,6 +92,32 @@
       <div class="svc"><div class="ic">🚪</div><h3>Opleveringsschoonmaak</h3><p>Grondige eindreiniging bij verhuizing of oplevering — sleutelklaar opgeleverd.</p><a class="more" href="/diensten/opleveringsschoonmaak/">Lees meer →</a></div>
     </div>
     <div style="text-align:center;margin-top:36px"><a href="/diensten/" class="btn btn-outline">Bekijk alle diensten →</a></div>
+  </div>
+</section>
+
+<!-- Glasbewassing calculator (compact) -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="calc-cta">
+      <div class="info">
+        <span class="eyebrow" style="color:var(--gold-light)">Glasbewassing-calculator</span>
+        <h2>Ken je prijs in <span class="g">één minuut</span></h2>
+        <p>Vaste prijs van € 45, zonder voorrijkosten en met streeploos osmosewater. Vul je gegevens in en bereken direct.</p>
+        <div class="mini">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Geen voorrijkosten</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Osmosewater</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg> Direct resultaat</span>
+        </div>
+      </div>
+      <form class="calc-form" onsubmit="return startCalc(event)">
+        <label for="calcEmail">E‑mailadres</label>
+        <input id="calcEmail" type="email" placeholder="naam@voorbeeld.nl" required>
+        <label for="calcTel">Telefoonnummer</label>
+        <input id="calcTel" type="tel" placeholder="06 ..." required>
+        <button type="submit" class="btn btn-gold">Bereken mijn prijs →</button>
+        <p class="calc-err" id="calcErr">Vul a.u.b. een geldig e‑mailadres én telefoonnummer in.</p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -191,5 +235,17 @@
 
 <div id="site-footer"></div>
 <script src="/site.js?v=3"></script>
+<script>
+  function startCalc(e){
+    e.preventDefault();
+    var email=document.getElementById('calcEmail').value.trim();
+    var tel=document.getElementById('calcTel').value.trim();
+    var ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && tel.replace(/[^0-9]/g,'').length>=8;
+    if(!ok){document.getElementById('calcErr').style.display='block';return false;}
+    try{localStorage.setItem('xaphil_lead', JSON.stringify({email:email,tel:tel}));}catch(err){}
+    window.location.href='/glasbewassing-offerte/';
+    return false;
+  }
+</script>
 </body>
 </html>
