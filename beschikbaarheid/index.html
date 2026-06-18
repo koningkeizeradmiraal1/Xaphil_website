@@ -74,7 +74,7 @@
 <div id="site-footer"></div>
 <script src="/site.js?v=3"></script>
 <script>
-  var PLANNING_EMAIL = "/send.php";
+  var PLANNING_EMAIL = "https://formsubmit.co/ajax/personeel@xaphil.com";
   var DAGEN=['ma','di','wo','do','vr','za','zo'];
   var MND=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
   var OPTIES=['Niet beschikbaar','Hele dag','Ochtend','Middag','Avond','Ochtend + middag','Middag + avond'];
@@ -109,7 +109,7 @@
     var fd=new FormData(document.getElementById('availForm'));
     var payload={_subject:'Beschikbaarheid — '+naam+' ('+document.getElementById('weekField').value+')'};
     fd.forEach(function(v,k){payload[k]=v;});
-    fetch(PLANNING_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.assign({form:"beschikbaarheid"},payload))}).catch(function(){});
+    fetch(PLANNING_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
     document.getElementById('availForm').style.display='none';
     document.getElementById('doneText').textContent='Bedankt '+naam+'! Je beschikbaarheid voor '+document.getElementById('weekField').value+' is doorgegeven.';
     document.getElementById('done').style.display='block';

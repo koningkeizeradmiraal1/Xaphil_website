@@ -32,8 +32,7 @@
         <div class="item"><div class="ci">📍</div><div><b>Adres</b><span>Verlengde Bremenweg 15<br>9723 JV Groningen</span></div></div>
         <div class="item"><div class="ci">⏰</div><div><b>Spoeddienst</b><span>24 uur per dag, 7 dagen per week bereikbaar</span></div></div>
       </div>
-      <form class="form" action="/send.php" method="POST" onsubmit="return contactSubmit(event)">
-        <input type="hidden" name="form" value="contact">
+      <form class="form" action="https://formsubmit.co/info@xaphilfacilityservices.com" method="POST">
         <input type="hidden" name="_subject" value="Nieuwe aanvraag via xaphilfacilityservices.com">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
@@ -64,7 +63,6 @@
         </div>
         <div class="field"><label for="bericht">Uw bericht</label><textarea id="bericht" name="Bericht" placeholder="Beschrijf kort uw situatie of vraag..." required></textarea></div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Verstuur aanvraag</button>
-        <p id="okmsg" style="display:none;color:var(--teal-dark);font-weight:700;margin-top:14px">✓ Bedankt! Je aanvraag is verzonden — we nemen snel contact op.</p>
         <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Uw aanvraag komt rechtstreeks bij ons binnen op info@xaphilfacilityservices.com. We reageren zo snel mogelijk. Je gegevens behandelen we volgens onze <a href="/privacyverklaring/">privacyverklaring</a>.</p>
       </form>
     </div>
@@ -90,10 +88,5 @@
 
 <div id="site-footer"></div>
 <script src="/site.js?v=3"></script>
-<script>
-function contactSubmit(e){e.preventDefault();var f=e.target;fetch('/send.php',{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){return r.json();}).then(showOk).catch(showOk);return false;}
-function showOk(){var f=document.querySelector('.form');if(f)f.style.display='none';var m=document.getElementById('okmsg');if(m)m.style.display='block';}
-if(location.search.indexOf('verzonden=1')>-1)showOk();
-</script>
 </body>
 </html>
