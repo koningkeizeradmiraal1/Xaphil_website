@@ -13,6 +13,8 @@
   var defSvg = '';
 
   var diensten = [
+    ['/diensten/particuliere-schoonmaak/', 'Particuliere schoonmaak'],
+    ['/diensten/maidservice/', 'Maidservice'],
     ['/diensten/glasbewassing/', 'Glasbewassing'],
     ['/diensten/opleveringsschoonmaak/', 'Opleveringsschoonmaak'],
     ['/diensten/hoarding-verzamelwoede-schoonmaak/', 'Schoonmaak na verzamelwoede'],
