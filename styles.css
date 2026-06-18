@@ -45,7 +45,13 @@ h1,h2,h3{line-height:1.14;letter-spacing:-.02em;font-weight:800}
 .topbar a{color:#cbd5e1;transition:.2s}
 .topbar a:hover{color:#fff}
 .topbar .right{display:flex;gap:20px;align-items:center}
-@media(max-width:680px){.topbar .left{display:none}}
+.tb-reviews{display:inline-flex;align-items:center;gap:7px;color:#cbd5e1;font-size:.82rem;font-weight:600;text-decoration:none}
+.tb-reviews:hover{color:#fff}
+.tb-reviews .gico{width:17px;height:17px;flex:none;background:#fff;border-radius:3px;padding:1.5px}
+.tb-reviews .tb-stars{color:#f6b21b;letter-spacing:.5px}
+.tb-reviews b{color:#fff;font-weight:700}
+.tb-reviews .tb-sub{color:#9fb0c2}
+@media(max-width:680px){.topbar .left{display:none}.tb-reviews .tb-sub{display:none}}
 
 /* Header */
 header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
