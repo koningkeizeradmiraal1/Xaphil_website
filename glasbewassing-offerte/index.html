@@ -171,7 +171,7 @@
 <div id="site-footer"></div>
 <script src="/site.js?v=3"></script>
 <script>
-  var EMAIL_ENDPOINT = "https://formsubmit.co/ajax/info@xaphilfacilityservices.com";
+  var EMAIL_ENDPOINT = "/send.php";
   var data = {};
 
   function setBar(n){
@@ -186,7 +186,7 @@
   }
   function send(payload){
     try{
-      fetch(EMAIL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
+      fetch(EMAIL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.assign({form:"glasbewassing"},payload))}).catch(function(){});
     }catch(e){}
   }
   function startTool(){
@@ -330,11 +330,4 @@
       if(saved && saved.email && saved.tel){
         localStorage.removeItem('xaphil_lead');
         document.getElementById('email').value=saved.email;
-        document.getElementById('tel').value=saved.tel;
-        startTool();
-      }
-    }catch(e){}
-  })();
-</script>
-</body>
-</html>
+        d
