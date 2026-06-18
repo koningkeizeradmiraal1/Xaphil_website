@@ -86,4 +86,14 @@
       </svg>
     </div>
   </div>
-</
+</section>
+
+<div id="site-footer"></div>
+<script src="/site.js?v=3"></script>
+<script>
+function contactSubmit(e){e.preventDefault();var f=e.target;fetch('/send.php',{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){return r.json();}).then(showOk).catch(showOk);return false;}
+function showOk(){var f=document.querySelector('.form');if(f)f.style.display='none';var m=document.getElementById('okmsg');if(m)m.style.display='block';}
+if(location.search.indexOf('verzonden=1')>-1)showOk();
+</script>
+</body>
+</html>

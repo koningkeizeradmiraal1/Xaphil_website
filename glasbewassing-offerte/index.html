@@ -330,4 +330,11 @@
       if(saved && saved.email && saved.tel){
         localStorage.removeItem('xaphil_lead');
         document.getElementById('email').value=saved.email;
-        d
+        document.getElementById('tel').value=saved.tel;
+        startTool();
+      }
+    }catch(e){}
+  })();
+</script>
+</body>
+</html>
