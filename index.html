@@ -23,6 +23,11 @@
   .calc-form .btn{width:100%;justify-content:center}
   .calc-err{color:#ffd9d9;font-size:.83rem;margin-top:8px;display:none}
   @media(max-width:760px){.calc-cta{grid-template-columns:1fr;padding:30px}}
+  .promo-ribbon{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:#3a2c06;font-weight:700;font-size:.95rem;text-align:center;padding:13px 18px;text-decoration:none;transition:.2s}
+  .promo-ribbon:hover{filter:brightness(1.05)}
+  .promo-ribbon .arrow{transition:.2s}
+  .promo-ribbon:hover .arrow{transform:translateX(4px)}
+  @media(max-width:560px){.promo-ribbon{font-size:.83rem;padding:11px 14px;gap:7px}}
 </style>
 <script type="application/ld+json">
 {
@@ -64,6 +69,8 @@
 </head>
 <body data-page="home">
 <div id="site-header"></div>
+
+<a class="promo-ribbon" href="/aanbod/">🏢 Nieuw: kantoorschoonmaak — 3 maanden voor € 35 per uur, geen verplichting <span class="arrow">→</span></a>
 
 <!-- Hero -->
 <section class="hero" style="padding:0">
