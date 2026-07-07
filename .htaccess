@@ -34,4 +34,7 @@
   # Samengevoegde plaatspagina's -> losse plaatspagina's
   RewriteRule ^glasbewassing-hoogezand-sappemeer/?$ /glasbewassing-hoogezand/ [R=301,L]
   RewriteRule ^glasbewassing-eelde-paterswolde/?$ /glasbewassing-eelde/ [R=301,L]
+
+  # Oude WordPress-permalinks (nog in Google-index) -> nieuwe URL's
+  RewriteRule ^onze-diensten/?$ /diensten/ [R=301,L]
 </IfModule>
