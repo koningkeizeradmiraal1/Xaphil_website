@@ -50,22 +50,20 @@
         <div class="item"><div class="ci">📍</div><div><b>Adres</b><span>Verlengde Bremenweg 15<br>9723 JV Groningen</span></div></div>
         <div class="item"><div class="ci">⏰</div><div><b>Spoeddienst</b><span>24 uur per dag, 7 dagen per week bereikbaar</span></div></div>
       </div>
-      <form class="form" action="https://formsubmit.co/info@xaphilfacilityservices.com" method="POST">
-        <input type="hidden" name="_subject" value="Nieuwe aanvraag via xaphilfacilityservices.com">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <form class="form" id="contactForm" action="/contact/verstuur.php" method="POST" novalidate>
+        <input type="hidden" name="ts" id="cf-ts" value="">
+        <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div class="row">
-          <div class="field"><label for="naam">Naam</label><input id="naam" name="Naam" type="text" placeholder="Uw naam" required></div>
-          <div class="field"><label for="bedrijf">Bedrijf (optioneel)</label><input id="bedrijf" name="Bedrijf" type="text" placeholder="Bedrijfsnaam"></div>
+          <div class="field"><label for="naam">Naam</label><input id="naam" name="naam" type="text" placeholder="Uw naam" autocomplete="name" required></div>
+          <div class="field"><label for="bedrijf">Bedrijf (optioneel)</label><input id="bedrijf" name="bedrijf" type="text" placeholder="Bedrijfsnaam" autocomplete="organization"></div>
         </div>
         <div class="row">
-          <div class="field"><label for="email">E-mailadres</label><input id="email" name="E-mailadres" type="email" placeholder="naam@voorbeeld.nl" required></div>
-          <div class="field"><label for="tel">Telefoonnummer</label><input id="tel" name="Telefoon" type="tel" placeholder="06 ..."></div>
+          <div class="field"><label for="email">E-mailadres</label><input id="email" name="email" type="email" placeholder="naam@voorbeeld.nl" autocomplete="email" required></div>
+          <div class="field"><label for="tel">Telefoonnummer</label><input id="tel" name="telefoon" type="tel" placeholder="06 ..." autocomplete="tel"></div>
         </div>
         <div class="field">
           <label for="dienst">Gewenste dienst</label>
-          <select id="dienst" name="Dienst">
+          <select id="dienst" name="dienst">
             <option>Reguliere schoonmaak</option>
             <option>Glasbewassing</option>
             <option>Opleveringsschoonmaak</option>
@@ -79,8 +77,9 @@
             <option>Anders / weet ik nog niet</option>
           </select>
         </div>
-        <div class="field"><label for="bericht">Uw bericht</label><textarea id="bericht" name="Bericht" placeholder="Beschrijf kort uw situatie of vraag..." required></textarea></div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Verstuur aanvraag</button>
+        <div class="field"><label for="bericht">Uw bericht</label><textarea id="bericht" name="bericht" placeholder="Beschrijf kort uw situatie of vraag..." required></textarea></div>
+        <button type="submit" id="cf-btn" class="btn btn-primary" style="width:100%;justify-content:center">Verstuur aanvraag</button>
+        <div id="cf-status" role="status" aria-live="polite" style="display:none;margin-top:14px;padding:14px 16px;border-radius:12px;font-weight:600;font-size:.95rem"></div>
         <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Uw aanvraag komt rechtstreeks bij ons binnen op info@xaphilfacilityservices.com. We reageren zo snel mogelijk. Je gegevens behandelen we volgens onze <a href="/privacyverklaring/">privacyverklaring</a>.</p>
       </form>
     </div>
@@ -106,6 +105,43 @@
 
 <div id="site-footer"><footer><div class="wrap"><div class="foot-grid"><div class="foot-brand"><a href="/" class="logo"><img class="logo-full" src="/images/logo.png" alt="Xaphil Facility Services" decoding="async"></a><p>Uw partner in specialistische en professionele schoonmaak in Groningen en omgeving.</p></div><div><h4>Menu</h4><a href="/diensten/">Diensten</a><a href="/branches/">Branches</a><a href="/onze-projecten/">Projecten</a><a href="/over-ons/">Over ons</a><a href="/kennisbank/">Kennisbank</a><a href="/contact/">Contact</a></div><div><h4>Diensten</h4><a href="/diensten/glasbewassing/">Glasbewassing</a><a href="/diensten/opleveringsschoonmaak/">Opleveringsschoonmaak</a><a href="/diensten/extreme-schoonmaak-na-incidenten/">Extreme schoonmaak</a><a href="/diensten/gevelreiniging/">Gevelreiniging</a><a href="/spoed-schoonmaak-groningen/">Spoeddienst 24/7</a></div><div class="foot-contact"><h4>Contact</h4><a href="tel:+31850606838"><b>085 06 06 838</b></a><a href="mailto:info@xaphilfacilityservices.com">info@xaphilfacilityservices.com</a><a href="https://maps.google.com/?cid=4735427590661068135" target="_blank" rel="noopener">Verlengde Bremenweg 15<br>9723 JV Groningen</a></div></div><div class="foot-bottom"><span>© 2026 Xaphil Facility Services · Alle rechten voorbehouden</span><span><a href="/privacyverklaring/">Privacyverklaring</a> · <a href="/algemene-voorwaarden/">Algemene voorwaarden</a></span></div></div></footer><div class="floaters"><a class="fl-wa" href="https://wa.me/31626463606" title="WhatsApp" target="_blank" rel="noopener">💬</a><a class="fl-tel" href="tel:+31850606838" title="Bel ons">📞</a></div></div>
 <script src="/site.js?v=5"></script>
+<script>
+(function(){
+  var f=document.getElementById('contactForm'); if(!f) return;
+  var st=document.getElementById('cf-status'), btn=document.getElementById('cf-btn');
+  document.getElementById('cf-ts').value=Math.floor(Date.now()/1000);
+  function show(ok,msg){
+    st.style.display='block';
+    st.style.background=ok?'#e7f9ee':'#fdecec';
+    st.style.color=ok?'#1c7a43':'#a12a2a';
+    st.innerHTML=msg;
+  }
+  var q=new URLSearchParams(location.search).get('verzonden');
+  if(q==='1') show(true,'Bedankt! Uw aanvraag is verstuurd. We nemen zo snel mogelijk contact met u op.');
+  if(q==='0') show(false,'Versturen is helaas mislukt. Bel ons op <a href="tel:+31850606838">085 06 06 838</a> of mail naar <a href="mailto:info@xaphilfacilityservices.com">info@xaphilfacilityservices.com</a>.');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!f.checkValidity()){ f.reportValidity(); return; }
+    btn.disabled=true; var t=btn.textContent; btn.textContent='Bezig met versturen...';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){ return r.json().catch(function(){ return {ok:false}; }); })
+      .then(function(d){
+        if(d && d.ok){
+          show(true,d.message||'Bedankt! Uw aanvraag is verstuurd.');
+          f.reset(); document.getElementById('cf-ts').value=Math.floor(Date.now()/1000);
+          if(window.gtag) gtag('event','generate_lead',{form:'contact'});
+        } else {
+          show(false,(d&&d.message?d.message+' ':'')+'Lukt het niet? Bel <a href="tel:+31850606838">085 06 06 838</a> of <a href="https://wa.me/31626463606" target="_blank" rel="noopener">stuur een WhatsApp</a>.');
+        }
+      })
+      .catch(function(){
+        show(false,'Er ging iets mis met de verbinding. Bel <a href="tel:+31850606838">085 06 06 838</a> of mail naar <a href="mailto:info@xaphilfacilityservices.com">info@xaphilfacilityservices.com</a>.');
+      })
+      .finally(function(){ btn.disabled=false; btn.textContent=t; });
+  });
+})();
+</script>
+
 <!-- Trustoo reviews-widget -->
 <script async src="https://static.trustoo.nl/widget/widget_v2.js"></script>
 </body>
