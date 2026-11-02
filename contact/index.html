@@ -51,7 +51,7 @@
         <div class="item"><div class="ci">⏰</div><div><b>Spoeddienst</b><span>24 uur per dag, 7 dagen per week bereikbaar</span></div></div>
       </div>
       <form class="form" id="contactForm" action="/contact/verstuur.php" method="POST" novalidate>
-        <input type="hidden" name="ts" id="cf-ts" value="">
+        <input type="hidden" name="el" id="cf-el" value="">
         <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div class="row">
           <div class="field"><label for="naam">Naam</label><input id="naam" name="naam" type="text" placeholder="Uw naam" autocomplete="name" required></div>
@@ -109,7 +109,7 @@
 (function(){
   var f=document.getElementById('contactForm'); if(!f) return;
   var st=document.getElementById('cf-status'), btn=document.getElementById('cf-btn');
-  document.getElementById('cf-ts').value=Math.floor(Date.now()/1000);
+  var cfStart=Date.now();
   function show(ok,msg){
     st.style.display='block';
     st.style.background=ok?'#e7f9ee':'#fdecec';
@@ -122,13 +122,14 @@
   f.addEventListener('submit',function(e){
     e.preventDefault();
     if(!f.checkValidity()){ f.reportValidity(); return; }
+    document.getElementById('cf-el').value=Math.round((Date.now()-cfStart)/1000);
     btn.disabled=true; var t=btn.textContent; btn.textContent='Bezig met versturen...';
     fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
       .then(function(r){ return r.json().catch(function(){ return {ok:false}; }); })
       .then(function(d){
         if(d && d.ok){
           show(true,d.message||'Bedankt! Uw aanvraag is verstuurd.');
-          f.reset(); document.getElementById('cf-ts').value=Math.floor(Date.now()/1000);
+          f.reset(); cfStart=Date.now();
           if(window.gtag) gtag('event','generate_lead',{form:'contact'});
         } else {
           show(false,(d&&d.message?d.message+' ':'')+'Lukt het niet? Bel <a href="tel:+31850606838">085 06 06 838</a> of <a href="https://wa.me/31626463606" target="_blank" rel="noopener">stuur een WhatsApp</a>.');

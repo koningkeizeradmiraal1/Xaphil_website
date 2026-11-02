@@ -26,10 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Spam: honeypot + minimale invultijd (3 sec)
+require __DIR__ . '/../beveiliging.php';
+
+// Beveiliging: herkomst, honeypot, minimale invultijd (3 sec), max 5 berichten per 10 min per IP
+if (!xfs_herkomst_ok()) antwoord(false, 'Niet toegestaan.', $isAjax);
 if (!empty($_POST['website'])) antwoord(true, 'Bedankt!', $isAjax);
-$start = isset($_POST['ts']) ? (int)$_POST['ts'] : 0;
-if ($start > 0 && (time() - $start) < 3) antwoord(true, 'Bedankt!', $isAjax);
+if (!xfs_tijd_ok($_POST['el'] ?? null, 3)) antwoord(true, 'Bedankt!', $isAjax);
+if (!xfs_limiet_ok('contact', 5, 600)) antwoord(false, 'U heeft al meerdere berichten verstuurd. Probeer het over een paar minuten opnieuw, of bel ons op 085 06 06 838.', $isAjax);
 
 function veld($naam, $max = 200) {
     $w = isset($_POST[$naam]) ? trim((string)$_POST[$naam]) : '';

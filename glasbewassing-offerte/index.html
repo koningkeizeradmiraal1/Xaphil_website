@@ -190,6 +190,7 @@
 <script src="/site.js?v=5"></script>
 <script>
   var EMAIL_ENDPOINT = "/mail.php";
+  var PAGE_START = Date.now();
   var data = {};
 
   function setBar(n){
@@ -204,7 +205,7 @@
   }
   function send(payload){
     try{
-      payload._form='glasbewassing';
+      payload._form='glasbewassing'; payload._el=Math.round((Date.now()-PAGE_START)/1000);
       fetch(EMAIL_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
     }catch(e){}
   }

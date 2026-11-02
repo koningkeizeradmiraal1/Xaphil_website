@@ -90,6 +90,7 @@
 <script src="/site.js?v=5"></script>
 <script>
   var PLANNING_EMAIL = "/mail.php";
+  var PAGE_START = Date.now();
   var DAGEN=['ma','di','wo','do','vr','za','zo'];
   var MND=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
   var OPTIES=['Niet beschikbaar','Hele dag','Ochtend','Middag','Avond','Ochtend + middag','Middag + avond'];
@@ -124,7 +125,7 @@
     var fd=new FormData(document.getElementById('availForm'));
     var payload={_subject:'Beschikbaarheid — '+naam+' ('+document.getElementById('weekField').value+')'};
     fd.forEach(function(v,k){payload[k]=v;});
-    payload._form='beschikbaarheid';
+    payload._form='beschikbaarheid'; payload._el=Math.round((Date.now()-PAGE_START)/1000);
     var btn=document.querySelector('#availForm button[type=submit]'), err=document.getElementById('err');
     btn.disabled=true; btn.textContent='Bezig met versturen...';
     fetch(PLANNING_EMAIL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})

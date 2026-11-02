@@ -6,9 +6,12 @@
  * dit script kan misbruiken om naar willekeurige adressen te mailen.
  */
 
+require __DIR__ . '/beveiliging.php';
+
+// formulier => [ontvanger, min. seconden open, max. berichten, per x seconden]
 $FORMULIEREN = [
-    'glasbewassing'   => 'info@xaphilfacilityservices.com',
-    'beschikbaarheid' => 'personeel@xaphil.com',
+    'glasbewassing'   => ['info@xaphilfacilityservices.com', 0, 6,  600],  // tool kan direct starten vanaf homepage
+    'beschikbaarheid' => ['personeel@xaphil.com',            3, 10, 600],  // meerdere medewerkers kunnen hetzelfde wifi delen
 ];
 $AFZENDER = 'website@xaphilfacilityservices.com'; // moet op het eigen domein staan (SPF/DMARC)
 
@@ -29,7 +32,11 @@ $form = isset($data['_form']) ? (string)$data['_form'] : '';
 if (!isset($FORMULIEREN[$form])) klaar(false, 400, 'Onbekend formulier');
 if (!empty($data['_honey']) || !empty($data['website'])) klaar(true); // spam: stil negeren
 
-$ontvanger = $FORMULIEREN[$form];
+list($ontvanger, $minTijd, $maxAantal, $venster) = $FORMULIEREN[$form];
+
+if (!xfs_herkomst_ok()) klaar(false, 403, 'Niet toegestaan');
+if (!xfs_tijd_ok($data['_el'] ?? null, $minTijd)) klaar(true); // te snel = bot: stil negeren
+if (!xfs_limiet_ok($form, $maxAantal, $venster)) klaar(false, 429, 'Te veel berichten. Probeer het over een paar minuten opnieuw.');
 $enkel = function ($s, $max) { return mb_substr(trim(preg_replace('/[\r\n\t]+/', ' ', (string)$s)), 0, $max, 'UTF-8'); };
 
 $onderwerp = $enkel($data['_subject'] ?? 'Nieuwe aanvraag via de website', 150);
