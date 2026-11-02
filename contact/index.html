@@ -50,9 +50,11 @@
         <div class="item"><div class="ci">📍</div><div><b>Adres</b><span>Verlengde Bremenweg 15<br>9723 JV Groningen</span></div></div>
         <div class="item"><div class="ci">⏰</div><div><b>Spoeddienst</b><span>24 uur per dag, 7 dagen per week bereikbaar</span></div></div>
       </div>
-      <form class="form" id="contactForm" action="/contact/verstuur.php" method="POST" novalidate>
-        <input type="hidden" name="el" id="cf-el" value="">
-        <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <form class="form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <input type="hidden" name="access_key" value="1f923ee6-a5ea-429d-8984-c28952f34b48">
+        <input type="hidden" name="subject" id="cf-subject" value="Nieuwe aanvraag via xaphilfacilityservices.com">
+        <input type="hidden" name="from_name" value="Website Xaphil Facility Services">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div class="row">
           <div class="field"><label for="naam">Naam</label><input id="naam" name="naam" type="text" placeholder="Uw naam" autocomplete="name" required></div>
           <div class="field"><label for="bedrijf">Bedrijf (optioneel)</label><input id="bedrijf" name="bedrijf" type="text" placeholder="Bedrijfsnaam" autocomplete="organization"></div>
@@ -80,7 +82,7 @@
         <div class="field"><label for="bericht">Uw bericht</label><textarea id="bericht" name="bericht" placeholder="Beschrijf kort uw situatie of vraag..." required></textarea></div>
         <button type="submit" id="cf-btn" class="btn btn-primary" style="width:100%;justify-content:center">Verstuur aanvraag</button>
         <div id="cf-status" role="status" aria-live="polite" style="display:none;margin-top:14px;padding:14px 16px;border-radius:12px;font-weight:600;font-size:.95rem"></div>
-        <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Uw aanvraag komt rechtstreeks bij ons binnen op info@xaphilfacilityservices.com. We reageren zo snel mogelijk. Je gegevens behandelen we volgens onze <a href="/privacyverklaring/">privacyverklaring</a>.</p>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Uw aanvraag komt rechtstreeks bij ons binnen. We reageren zo snel mogelijk. Je gegevens behandelen we volgens onze <a href="/privacyverklaring/">privacyverklaring</a>.</p>
       </form>
     </div>
   </div>
@@ -109,35 +111,30 @@
 (function(){
   var f=document.getElementById('contactForm'); if(!f) return;
   var st=document.getElementById('cf-status'), btn=document.getElementById('cf-btn');
-  var cfStart=Date.now();
+  var FOUT='Bel ons op <a href="tel:+31850606838">085 06 06 838</a> of <a href="https://wa.me/31626463606" target="_blank" rel="noopener">stuur een WhatsApp</a>.';
   function show(ok,msg){
     st.style.display='block';
     st.style.background=ok?'#e7f9ee':'#fdecec';
     st.style.color=ok?'#1c7a43':'#a12a2a';
     st.innerHTML=msg;
   }
-  var q=new URLSearchParams(location.search).get('verzonden');
-  if(q==='1') show(true,'Bedankt! Uw aanvraag is verstuurd. We nemen zo snel mogelijk contact met u op.');
-  if(q==='0') show(false,'Versturen is helaas mislukt. Bel ons op <a href="tel:+31850606838">085 06 06 838</a> of mail naar <a href="mailto:info@xaphilfacilityservices.com">info@xaphilfacilityservices.com</a>.');
   f.addEventListener('submit',function(e){
     e.preventDefault();
     if(!f.checkValidity()){ f.reportValidity(); return; }
-    document.getElementById('cf-el').value=Math.round((Date.now()-cfStart)/1000);
+    document.getElementById('cf-subject').value='Nieuwe aanvraag via website: '+document.getElementById('dienst').value+' - '+document.getElementById('naam').value.trim();
     btn.disabled=true; var t=btn.textContent; btn.textContent='Bezig met versturen...';
     fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
-      .then(function(r){ return r.json().catch(function(){ return {ok:false}; }); })
+      .then(function(r){ return r.json().catch(function(){ return {success:false}; }); })
       .then(function(d){
-        if(d && d.ok){
-          show(true,d.message||'Bedankt! Uw aanvraag is verstuurd.');
-          f.reset(); cfStart=Date.now();
+        if(d && d.success){
+          show(true,'Bedankt! Uw aanvraag is verstuurd. We nemen zo snel mogelijk contact met u op.');
+          f.reset();
           if(window.gtag) gtag('event','generate_lead',{form:'contact'});
         } else {
-          show(false,(d&&d.message?d.message+' ':'')+'Lukt het niet? Bel <a href="tel:+31850606838">085 06 06 838</a> of <a href="https://wa.me/31626463606" target="_blank" rel="noopener">stuur een WhatsApp</a>.');
+          show(false,'Versturen is helaas mislukt. '+FOUT);
         }
       })
-      .catch(function(){
-        show(false,'Er ging iets mis met de verbinding. Bel <a href="tel:+31850606838">085 06 06 838</a> of mail naar <a href="mailto:info@xaphilfacilityservices.com">info@xaphilfacilityservices.com</a>.');
-      })
+      .catch(function(){ show(false,'Er ging iets mis met de verbinding. '+FOUT); })
       .finally(function(){ btn.disabled=false; btn.textContent=t; });
   });
 })();
